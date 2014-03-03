@@ -1,0 +1,195 @@
+
+\documentclass[english,12pt,a4paper,pdftex]{article}
+%% This package is required
+%% Choose your school from arts, biz, chem, elec, eng, sci.
+%% Choose the character encoding scheme used by your editor: utf8, latin1
+
+\usepackage[elec,utf8]{aaltothesis} % this is the default in aaltothesis.sty
+%% Use this if you run pdflatex and use jpg/pdf-format pictures.
+
+\usepackage{graphicx}
+
+%% Use the macros in this package to change how the hyperref package below 
+%% typesets its hypertext -- hyperlink colour, font, etc. See the package
+%% documentation. It also defines the \url macro, so use the package when 
+%% not using the hyperref package.
+%\usepackage{url}
+
+%% Use this if you want to get links and nice output with pdflatex
+\usepackage[pdfpagemode=None,colorlinks=true,urlcolor=red,%
+linkcolor=blue,citecolor=black,pdfstartview=FitH]{hyperref}
+
+%% Use this if you write hard core mathematics, these are usually needed
+\usepackage{amsfonts,amssymb,amsbsy}  
+
+%% Horizontal margins, DO NOT TOUCH!
+\setlength{\hoffset}{-1in}
+\setlength{\oddsidemargin}{35mm}
+\setlength{\evensidemargin}{25mm}
+\setlength{\textwidth}{15cm}
+%% Vertical margins, DO NOT TOUCH!
+\setlength{\voffset}{-1in}
+\setlength{\headsep}{7mm}
+\setlength{\headheight}{1em}
+\setlength{\topmargin}{25mm-\headheight-\headsep}
+\setlength{\textheight}{23cm}
+
+%% Output starts here
+\begin{document}
+%% Change the school field to describe your school if the autimatically 
+%% set name is wrong
+% \university{aalto University}{aalto-Yliopisto}
+% \school{School of Electrical Engineering}{SähköTekniikan korkeakoulu}
+
+%% Vain kandityölle: Korjaa seuraavat vastaamaan koulutusohjelmaasi
+%%
+%% Only for B.Sc. thesis: Choose your degree programme. 
+%\degreeprogram{Electronics and electrical engineering}%
+
+%% Only for M.Sc. and Licentiate thesis: Choose your department,
+%% professorship and professorship code. 
+\department{Department of Signal Processing and Acoustics}%
+{Signaalinkäsittelyn ja akustiikan laitos}
+\professorship{Speech and Language Processing}{}
+\code{S-89}
+
+%% Choose one of these:
+%\univdegree{BSc}
+%\univdegree{MSc}
+%% Added by Jose: For the non-finnish/swedish, the Lic degree is half of a PhD.
+%\univdegree{Lic}
+%% Add by Jose: For engineering exchange students (old plan, not Bolonia), PFC in Spain
+%% IMPORTANT: FPr is only valid with English!!!
+\univdegree{FPr}
+%% Should be self explanatory...
+\author{Jose Mariano Moreno Pimentel}
+
+%% Your thesis title. If the title is very long and the latex 
+%% does unsatisfactory job of breaking the lines, you will have to
+%% break the lines yourself with \\ control character. 
+%% Do not hyphenate titles.
+\thesistitle{Text-to-Speech adaptation using noisy data}{}
+
+\place{Espoo}
+%% For B.Sc. thesis use the date when you present your thesis. 
+\date{31.03.2014}
+
+%% B.Sc. or M.Sc. thesis supervisor 
+%% Note the "\" after the comma. This forces the following space to be 
+%% a normal interword space, not the space that starts a new sentence. 
+\supervisor{Prof.\ Mikko Kurimo}{Prof.\ Mikko Kurimo}
+
+%% B.Sc. or M.Sc. thesis advisors(s). 
+%%
+%% Note that there has been a change in the official EN translation
+%% of the Finnish title ``ohjaaja'' which in the previous version (1.5) 
+%% of this document was called ``instructor''. The recommended
+%% translation is now ``advisor''.  
+%% However, the LaTeX internal variable remains \instructor
+%% as there is little point to change the variable name. 
+%%
+%\instructor{Prof. Pirjo Professori}{Prof. Pirjo Professori}
+%\instructor{D.Sc.\ (Tech.) Olli Ohjaaja}{TkT Olli Ohjaaja}
+\instructor{M.Sc.\ (Tech.) Reima Karhila}{DI Reima Karhila}
+
+%% Aalto logo: syntax:
+% \uselogo{aaltoRed|aaltoBlue|aaltoYellow|aaltoGray|aaltoGrayScale}{?|!|''}
+%% Logo language is set to be the same as the document language.
+\uselogo{aaltoBlue}{''}
+
+%% Create the coverpage
+\makecoverpage
+
+%% Force new page so that English abstract starts from a new page
+\newpage
+%
+%% English abstract, uncomment if you need one. 
+%% 
+%% Abstract keywords
+\keywords{speech synthesis, synthetic speech, TTS, HMM, noise robust, TTS adaptation}
+%% Abstract text
+\begin{abstractpage}[english]
+ Your abstract in English. Try to keep the abstract short, approximately 
+ 100 words should be enough. Abstract explains your research topic, 
+ the methods you have used, and the results you obtained.  
+\end{abstractpage}
+%% Note that 
+%% if you are writting your master's thesis in English place the English
+%% abstract first followed by the possible Finnish abstract
+
+%% Preface
+%\mysection{Esipuhe}
+\mysection{Preface}
+
+\vspace{5cm}
+Otaniemi, 24.9.2013
+
+\vspace{5mm}
+{\hfill Teemu T.\ A.\ Teekkari \hspace{1cm}}
+
+%% Force new page after preface
+\newpage
+
+%% Table of contents. 
+\thesistableofcontents
+
+%% Symbols and abbreviations
+\mysection{Symbols and abbreviations}
+\subsection*{Symbols}
+
+\subsection*{Opetators}
+
+\subsection*{Abbreviations}
+\begin{tabular}{ll}
+	HMM		& Hidden Markov Model\\
+	TTS		& Text-to-Speech
+\end{tabular}
+%% Corrects the page numbering, there is no need to change these
+\cleardoublepage
+\storeinipagenumber
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\include{sections/introduction}
+
+%\section{Introduction}
+
+%% Leave first page empty
+%\thispagestyle{empty}
+
+%% In a thesis, every section starts a new page, hence \clearpage
+%\clearpage
+
+\section{Background}
+
+%% Three levels of hierarchy in sectioning should be enough
+
+\clearpage
+
+%% The \phantomsection command is nessesary for hyperref to jump to the 
+%% correct page, in other words it puts a hyper marker on the page.
+
+\phantomsection
+%\addcontentsline{toc}{section}{Viitteet}
+%\addcontentsline{toc}{section}{References}
+\begin{thebibliography}{99}
+
+\end{thebibliography}
+
+\appendix 
+\clearpage
+%% Adds the word "Appendices" to the table of contents
+\addtocontents{toc}{\protect\contentsline{section}{Appendices}{}{appendix}}
+
+\section{Esimerkki liitteestä\label{LiiteA}} %% appendix example (starts with section) in Finnish
+
+%% Equations, tables and figures have their own numbering in Appendices, REMEMBER TO DO EVERY TIME YOU START AN APPENDIX, THE LETTER A IS THE APPENDIX INDEX
+\renewcommand{\theequation}{A\arabic{equation}}
+\setcounter{equation}{0}  
+\renewcommand{\thefigure}{A\arabic{figure}}
+\setcounter{figure}{0}
+\renewcommand{\thetable}{A\arabic{table}}
+\setcounter{table}{0}
+
+
+\end{document}
