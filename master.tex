@@ -133,6 +133,14 @@ Otaniemi, 24.9.2013
 %% Table of contents. 
 \thesistableofcontents
 
+\newpage
+%% List of figures
+\listoffigures
+
+\newpage
+%% List of tables
+\listoftables
+
 %% Symbols and abbreviations
 \mysection{Symbols and abbreviations}
 \subsection*{Symbols}
@@ -185,7 +193,7 @@ Otaniemi, 24.9.2013
 %% Adds the word "Appendices" to the table of contents
 \addtocontents{toc}{\protect\contentsline{section}{Appendices}{}{appendix}}
 
-\section{Esimerkki liitteestä\label{LiiteA}} %% appendix example (starts with section) in Finnish
+ %% appendix example (starts with section) in Finnish
 
 %% Equations, tables and figures have their own numbering in Appendices, REMEMBER TO DO EVERY TIME YOU START AN APPENDIX, THE LETTER A IS THE APPENDIX INDEX
 \renewcommand{\theequation}{A\arabic{equation}}
