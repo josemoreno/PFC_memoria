@@ -37,3 +37,15 @@ In New York's World fair 1939 \cite{flanagan_book, Klatt87, flanagan_1973_speech
 The demonstration of the VODER stimulated the scientific community and more people become interested in artificial speech generation. In 1951, Franklin Cooper lead the development of a Pattern Playback synthesizer \cite{Klatt87, flanagan_1973_speech}. The device developed at the Haskins Laboratories used optically recorded spectrogram patterns on a transparent belt to regenerate the audio signal. 
 
 Walter Lawrence introduced in 1953 his Parametric Artificial Talker (PAT), the first formant synthesizer \cite{Klatt87}. It consisted of three parallel electronic resonators excited by a buzz or noise and a moving glass slide converted painted patterns into six different time functions to control the three formant frequencies, voicing amplitude, noise amplitude and the fundamental frequency. 
+
+Simultaneously, the OVE I was introduced as the first cascade formant synthesizer. As its name suggest, the resonators in the OVE I were connected in cascade. A new version of this synthesizer was aired ten years later. The OVE II consisted on separate parts modeling the vocal tract to differentiate between vowels, nasals and obstruent consonants. It was excited by voicing, aspiration noise and fricative noise.
+
+PAT and OVE developers engaged in a discussion about whether the transfer function of the acoustic tube should be modeled in parallel or in cascade. After a few years studying both systems, John Holmes presented his parallel formant synthesizer \cite{Klatt87}, obtaining a good quality in the synthesized voice.
+
+Linear Predictive Coding (LPC) was first used in some experiments in the mid 1960's \cite{Schroeder93} and it was used in low-cost systems in 1980. The method suffered some modifications and nowadays is very useful and it can be found in many systems. 
+
+Different TTS systems appeared during the following years. Probably, the most remarkable one was the system developed by Dennis Klatt, the Klattalk, using a new sophisticated voicing source \cite{Klatt87}, forming along MITalk, developed at the M.I.T., the basis for many systems that came after them and also many ones used nowadays \cite{LemmettyMSc}.
+
+The modern technology used in speech synthesis involve quite sophisticated algorithms. As said in Section \ref{intro}, HMM-based synthesis systems are very popular and they have been used in speech recognition for more than 30 years. In Section \ref{hmm_synthesis} a detailed description of these systems is given, as is the technique used in this project.
+
+HMM-based systems need the to extract some features or parameters from the voice, where the vocoder comes into action. Originally, the vocoder was developed to code the speech in telecommunication systems in order to save bandwidth by transmitting the parameters of a model in stead of the speech, as they change quite slowly compared to a speech waveform. In this project we will compared two vocoders, STRAIGHT and GlottHMM. They are both described in Section \ref{vocoders}. 
