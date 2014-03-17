@@ -4,7 +4,7 @@
 %% Choose your school from arts, biz, chem, elec, eng, sci.
 %% Choose the character encoding scheme used by your editor: utf8, latin1
 
-\usepackage[elec,utf8]{aaltothesis} % this is the default in aaltothesis.sty
+\usepackage[elec,utf8]{josethesis} % this is the default in aaltothesis.sty
 %% Use this if you run pdflatex and use jpg/pdf-format pictures.
 
 \usepackage{graphicx}
@@ -68,6 +68,7 @@ linkcolor=blue,citecolor=black,pdfstartview=FitH]{hyperref}
 %% does unsatisfactory job of breaking the lines, you will have to
 %% break the lines yourself with \\ control character. 
 %% Do not hyphenate titles.
+\spanishtitle{Adaptaci\'on texto a voz usando información ruidosa}
 \thesistitle{Text-to-Speech adaptation using noisy data}{}
 
 \place{Espoo}
@@ -103,16 +104,13 @@ linkcolor=blue,citecolor=black,pdfstartview=FitH]{hyperref}
 %% Force new page so that English abstract starts from a new page
 \newpage
 %
+\include{sections/resumen}
 %% English abstract, uncomment if you need one. 
 %% 
 %% Abstract keywords
 \keywords{speech synthesis, synthetic speech, TTS, HMM, noise robust, TTS adaptation}
 %% Abstract text
-\begin{abstractpage}[english]
- Your abstract in English. Try to keep the abstract short, approximately 
- 100 words should be enough. Abstract explains your research topic, 
- the methods you have used, and the results you obtained.  
-\end{abstractpage}
+\include{sections/abstract}
 %% Note that 
 %% if you are writting your master's thesis in English place the English
 %% abstract first followed by the possible Finnish abstract

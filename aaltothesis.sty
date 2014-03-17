@@ -183,6 +183,7 @@
 \newcommand*{\pl@ce}{}% variable
 \newcommand*{\place}[1]{\renewcommand{\pl@ce}{#1}}% User command
 %
+\newcommand*{\spanishplace}{\pl@ce{}, Finlandia}
 \newcommand*{\dateandplace}{\pl@ce{} \D@te{}}% Internal macro
 %
 \newcommand*{\Cod@}{}% variable
@@ -198,11 +199,14 @@
 }%
 %
 % the appropriate variable must be returned for the cover page and abstracts
+\newcommand{\spatitle}{}
+\newcommand{\spanishtitle}[1]{\renewcommand{\spatitle}{#1}}
 \newcommand{\th@stitl@}{}\newcommand{\ty@nnimi}{}%  variables
 \newcommand{\thesistitle}[2]{% User command
  \renewcommand{\th@stitl@}{#1}%
  \renewcommand{\ty@nnimi}{#2}%
 }%
+%\newcommand{\tituloproyecto}[1]% For the spanish summary
 \newcommand{\Th@sistitle}[1]{% internal macro
  \ifthenelse{\equal{#1}{english}}{\th@stitl@}{% For the abstract: #1 specified
  \ifthenelse{\equal{#1}{finnish}}{\ty@nnimi}{% For the abstract: #1 specified
@@ -462,6 +466,7 @@
  \pagestyle{myheadings}%
 }%
 %
+
 %%%%%% Abstract stuff begins here %%%%%%
 \newlength{\absheadleneng} % Sets width of 2nd column of eng. abstract header
 \newlength{\absheadlenfin} % Sets width of 2nd column of fin. abstract header
@@ -483,6 +488,7 @@
  \parbox[t][#1]{\abstractwidth-\auxwidth-\columnsep}{#3}%
 }%
 %
+
 %% Abstract field names in English
 \newcommand*{\authorname}{Author}%
 \newcommand*{\thesisname}{Title}%
@@ -573,6 +579,7 @@
 %% \phantomsection is a dummy command without the hyperref package.
 \AtBeginDocument{\providecommand*{\phantomsection}{}}%
 %
+
 %%%% The abstract page layout
 \newenvironment{abstractpage}[1][english]{%
  \stepcounter{Abstracts}%
@@ -667,7 +674,85 @@
   \clearpage%
  }%
 %%%%%% Abstract stuff ends here %%%%%%
+%%%% Summary in spanish (Jose)
+%%% Summary fields (Jose)
+\newcommand*{\nombreautor}{Autor}%
+\newcommand*{\titulo}{T\'itulo}%
+\newcommand*{\fecha}{Fecha}%
+\newcommand*{\nombretutor}{%
+\ifthenelse{\value{instructors}=0}{Tutor}{Tutor}%
+}%
+\newcommand*{\nombrecotutor}{%
+\ifthenelse{\value{instructors}=0}{}{}%
+\ifthenelse{\value{instructors}=1}{Co-tutor}{}%
+\ifthenelse{\value{instructors}>1}{Co-tutores}{}%
+}%
+%\renewcommand*{\abstractname}{Abstract}
+\newcommand*{\sumheadeng}{%
+ \ifthenelse{\boolean{BSc}}{resumen del proyecto fin de grado}{}%
+ \ifthenelse{\boolean{MSc}}{resumen del proyecto fin de m\'aster}{}%
+ \ifthenelse{\boolean{Lic}}{}{}%
+ \ifthenelse{\boolean{FPr}}{resumen del proyecto fin de carrera}{}%
+}%
 %
+\newcommand{\Autor}[1]{\absfield{\nombreautor}{#1}\vfill}%
+\newcommand{\Proyecto}[1]{\absfield{\titulo}{\raggedright#1}\vfill}%
+%%%% Summary in Spanish layout
+\newenvironment{resumencastellano}[1][english]{%
+ %\stepcounter{Abstracts}%
+ \phantomsection%
+ \settocabslang%
+ \ifthenelse{\equal{#1}{english}}{%
+  \setlength{\absheadlen}{\absheadleneng}%
+  \IfEnglish{\addcontentsline{toc}{section}{Summary in Spanish}}{}%
+ }{\ifthenelse{\equal{#1}{finnish}}{%
+ }{\PackageError{aaltothesis}%
+     {Only english or finnish is allowed as optional parameter.}%
+     {Use english or finnish.}%
+ }}%
+%
+ \pagestyle{empty}%
+ \enlargethispage{5mm}%
+ \noindent%
+ \begin{tabular}{@{}p{\abstractwidth-\absheadlen}p{\absheadlen}@{}}%
+  \parbox[t]{\abstractwidth-\absheadlen}{\textsc{\Univ@rsity{#1}\\\Sch@@l{#1}}}%
+  & \parbox[t]{\absheadlen}{\raggedleft\textsc{\sumheadeng}}\\%
+  &\\[-2mm]%
+ \end{tabular}%
+ \par%
+ \noindent%
+ \begin{tabular}{l}%
+   \hline\\[\rowsep]%
+   \absbox{26mm}{\Autor{\@uth@r}\Proyecto{\spatitle}%
+     Lugar: \spanishplace \hfill \fecha: \D@te{}}%
+   \ifthenelse{\boolean{BSc}}{%
+     \absbox{5mm}{\DgPrgn@me: \D@gr@@Prog{#1}\par\vfill}%
+     \ifthenelse{\value{instructors}=0}{%
+       \absbox{5mm}{\Sprvsrn@me: \Sup@rvisor{#1}%
+       }%
+     }{%
+       \absbox{12mm}{\Sprvsrn@me: \Sup@rvisor{#1}\par\vfill%
+         \Instrn@me: \Instruct@r{1}{#1}%
+         \ifthenelse{\value{instructors}>1}{, \Instruct@r{2}{#1}}{}}%
+     }%
+   }{%
+%     \absbox{18mm}{\F@culty{#1}\par\vfill%
+     \ifthenelse{\value{instructors}=0}{%
+       \absbox{5mm}{\nombretutor: \Sup@rvisor{#1}%
+       }%
+     }{%
+       \absbox{12mm}{\nombretutor: \Sup@rvisor{#1}\par\vfill%
+         \nombrecotutor: \Instruct@r{1}{#1}%
+         \ifthenelse{\value{instructors}>1}{, \Instruct@r{2}{#1}}{}%
+       }%
+     }%
+   }%
+   \end{tabular}
+   \\\\
+ }{%
+  \clearpage%
+ }%
+%%%% End of summary in spanish %%%%
 %% A few more macros
 \newcommand*{\mysection}[1]{%
 \newpage%
