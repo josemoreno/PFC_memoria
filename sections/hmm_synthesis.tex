@@ -10,8 +10,10 @@ They were first described in publications during the 1960s and the 1970s, but it
 %
 Nowadays, HMMs are widely used along different fields and its popularity is still increasing.
 
-As the name suggests, HMM-Based systems are statistical Markov models, where the systems modelled are assumed to be Markov processes, i.e. stochastic processes that satisfy the Markov property: the probability of a state transition depends only on the path of the past states. 
+As the name suggests, HMM-Based systems are statistical Markov models, where the systems modelled are assumed to be Markov processes, i.e. stochastic processes that satisfy the Markov property: the probability of a state transition depends only on the path of the past states.
 %
+The Markov property can be alternative described as a memoryless property: the next sample can be predicted from the current one, without using the past samples in the prediction.
+
 Formally, HMMs are a doubly stochastic process formed by an underlying stochastic process that is not observable, i.e hidden, but can be observed through another set of stochastic processes that produce an observation sequence. 
 %
 Thus, the stochastic function of HMMs is a result of two processes, the underlying one is a hidden Markov chain with a finite number of states and the observable one consists on a set of random processes associated with each state.
@@ -49,7 +51,7 @@ There are three main problems associated to HMMs:
 \end{centering}
 \end{figure}
 
-Finding the probability that the observed sequence was produced by the given model causes the first problem, but it can be used to score different models on how well they match the given observation sequence. This probability is calculated by the equation:
+Finding the probability that the observed sequence was produced by the given model causes the first problem, but it can be used to score different models based on how well they match the given observation sequence. This probability is calculated by the equation:
 
 \begin{equation}
 P(\mathbf{O}|\lambda) = \sum_{all \ Q} P(\mathbf{O}|\mathbf{Q},\lambda) \cdot P(\mathbf{Q}|\lambda)
@@ -58,4 +60,8 @@ P(\mathbf{O}|\lambda) = \sum_{all \ Q} P(\mathbf{O}|\mathbf{Q},\lambda) \cdot P(
 Although the calculation of $P(\mathbf{O}|\lambda)$ is straightforward, it involves on the order of $2 \cdot T \cdot N^{T}$ calculations, which is far from being efficient.
 %
 To reduce the computational cost of this calculation, this problem is usually evaluated with the Forward-Backward algorithm (see \cite{rabiner89}), requiring $N^{2} \cdot T $ calculations.
+
+To solve the second problem we need to find the single best state sequence for a given observation sequence and a given model, i.e. we need to find $Q* = arg max_{Q} P(\mathbf{Q}|\mathbf{O},\lambda)$. 
+%
+This is usually solved using the Viterbi-algorithm.
 
