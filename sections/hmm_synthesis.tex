@@ -63,5 +63,23 @@ To reduce the computational cost of this calculation, this problem is usually ev
 
 To solve the second problem we need to find the single best state sequence for a given observation sequence and a given model, i.e. we need to find $Q* = arg max_{Q} P(\mathbf{Q}|\mathbf{O},\lambda)$. 
 %
-This is usually solved using the Viterbi-algorithm.
+This is usually solved using the Viterbi-algorithm \cite{viterbi67}. 
 
+The third problem listed before is the most difficult one to solve.
+%
+Solving the model which maximizes the probability of the observation sequence has no known analytical solution. 
+%
+In stead, gradient based algorithms and iterative algorithms such as the Expectation-Maximization (EM) algorithm \cite{dempster77} are being used for maximizing $P(\mathbf{O}|\lambda)$.
+
+HMMs have the possibility of being extended with various features, increasing the versatility and efficiency depending on the needs of the user. 
+%
+For example, state tying, state duration densities and inclusion of null transitions are among the extensions proposed.
+%
+More information about HMMs can be found in  \cite{rabiner89} and \cite{rabiner93}.
+
+\subsection{HMM-Based Speech Synthesis System}
+\label{hmm_synthesis_based_system}
+In this project an HMM-based speaker-adaptive synthesis system will be built.
+%
+In \cite{tokuda13} a general overview of speech synthesis based in HMMs can be found. 98
+%
