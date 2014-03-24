@@ -195,15 +195,17 @@ Figure \ref{fig:hmm_system_adapt_overview} illustrates a HMM-based speaker-adapt
 \end{centering}
 \end{figure}
 
-The adaptation layer between the training and the synthesis part is the only difference between an adaptive and a non-adaptive system structure.
+The adaptation layer between the training and the synthesis part is the only difference between the structures of an adaptive and a non-adaptive system.
 %
 
-There are many adaptation techniques used in HMM-based speaker-adaptive systems, all of them targeting the same: transforming an average voice model to match a predefined target using a very small amount of speech data.
+Many adaptation techniques are used in HMM-based speaker-adaptive systems, all of them targeting the same: transforming an average voice model to match a predefined target using a very small amount of speech data.
 %
-Among the targets we can find for example speaker adaptation or expressive speech.
+Among the different targets we can find for example speaker adaptation or expressive speech.
 %
-In \cite{tokuda13} we can find different issues where adaptation techniques are used. 
-%
+In \cite{tokuda13} we can find several issues where adaptation techniques are helpful. 
 
 Within the speaker-adaptive challenge, several techniques to approach a satisfying solution are available. 
 %
+\cite{yamagishi2009} proposes an adaptation algorithm called constrained structural maximum a posterior lineal regression (CSMAPLR).
+%
+Several adaptation algorithms are compared in different conditions to figure out which one to use 
