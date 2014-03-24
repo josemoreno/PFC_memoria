@@ -173,7 +173,9 @@ If the model aims to reproduce one speaker, we would be talking about a speaker-
 %
 However, a speaker-adaptive system as the one used in this project aims to synthesize different speakers from one model as starting point.
 %
-This model is called an average voice model and the only difference with the speaker-independent model so far in the HMM-based system construction is that the speech data is composed by several speakers to cover different speaker styles.
+This model is called speaker-independent model, and the only difference with the speaker-dependent model so far in the HMM-based system construction is that the speech data is composed by several speakers to cover different speaker styles.
+%
+However, when using speaker-independent models aiming to adapt to different speakers, a technique called speaker-adaptive training (SAT) is used to generate an average voice model by normalizing interspeaker acoustic variation \cite{anastasakos1996, yamagishi2003training}.
 
 \subsubsection{Adaptation}
 \label{hmm_synthesis_adaptation}
@@ -183,7 +185,7 @@ In order to build a speaker-adaptive system, there is a third part that must be 
 
 As commented previously, HMM-based systems are quite flexible, resulting in a good quality adaptive systems.
 %
-Figure \ref{fig:hmm_system_adapt_overview} illustrates a HMM-based speaker-adaptive system, hence, it is the basic structure of both systems compared in this project.
+Figure \ref{fig:hmm_system_adapt_overview} illustrates a HMM-based speaker-adaptive system, hence, it shows the basic structure of both systems compared in this project.
 
 \begin{figure}[!htb]
 \begin{centering}
@@ -192,3 +194,16 @@ Figure \ref{fig:hmm_system_adapt_overview} illustrates a HMM-based speaker-adapt
 \label{fig:hmm_system_adapt_overview}
 \end{centering}
 \end{figure}
+
+The adaptation layer between the training and the synthesis part is the only difference between an adaptive and a non-adaptive system structure.
+%
+
+There are many adaptation techniques used in HMM-based speaker-adaptive systems, all of them targeting the same: transforming an average voice model to match a predefined target using a very small amount of speech data.
+%
+Among the targets we can find for example speaker adaptation or expressive speech.
+%
+In \cite{tokuda13} we can find different issues where adaptation techniques are used. 
+%
+
+Within the speaker-adaptive challenge, several techniques to approach a satisfying solution are available. 
+%
