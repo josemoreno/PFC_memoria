@@ -96,3 +96,99 @@ The general overview of a HMM-based synthesis system is ilustrated in Figure \re
 \end{figure}
 
 An HMM-based system can be divided in two major parts: training and synthesis. 
+%
+In the training part, the vocoder extracts the speech parameters of every sample in the speech database and the labels containing the translation to the phonetic unit used, as explained in Section \ref{speech_synthesis_systems_tts}.
+%
+Then, the obtained parameters are modeled in the framework of the HMM.
+%
+The goal of the synthesis part is to produce a speech waveform according to the text input.
+%
+This process begins with the analysis of the text, as in the training part, in order to concatenate the required HMMs for that particular sentence and generate the parameters to feed the synthesis module and generate the speech waveform.
+
+In this project we will be using a speaker-adaptive system. 
+%
+Thus, there is an extra part not represented in the general overview of an HMM-based system shown in Figure \ref{fig:hmm_system_overview}: adaptation. 
+%
+Before the parameter generation a transformation is applied to the context-dependent HMMs and the state duration models, aiming to convert them into models of the target speaker.
+%
+Adaptation makes synthesis with little data from a specific speaker possible, but it must be done from a good average voice model, built out from several speakers, and the differences between the average voice model and the target speaker will highly affect the similarity between the real speaker and the synthetic voice.
+%
+In Section \ref{hmm_synthesis_adaptation} an overview of a speaker-adaptive system is given and the adaptation technique used is explained.
+
+The next sections explain the different steps that are done while constructing the HMM-based speech synthesis system.
+
+\subsubsection{Speech Parametrization}
+\label{hmm_synthesis_parametrization}
+The first step of the training part is to extract from the speech signal a few parameters which function is to describe the essential characteristics of the speech signal as accurately as possible, compressing the original information.
+%
+A very efficient way was found in separating the speech signal to source and filter \cite{Fant1970}, both represented by coefficients. 
+%
+Both, STRAIGHT and GlottHMM follow the source-filter theory, although it is not the only approach to this problem, it is a functional trade-off between the accurate but complex direct physical modelling and a reasonable analytic solution.
+%
+This approach models the speech as a linear system where the ideal output is equivalent to the physical model, but the inner structure does not mimic the speech production physical structure.
+
+In Section \ref{vocoders} the differences between the speech parametrization done by GlottHMM and STRAIGHT can be found, as they implement a different solution to this problem while following the same source-filter structure.
+
+\subsubsection{Training of HMM}
+\label{hmm_synthesis_training}
+Once the parametrization is done, the speech features obtained are used to train a voice model. 
+%
+During the training, maximum-likelihood estimation of the HMM parameters is performed.
+
+The case of speech synthesis is a particular one, as the $F_{0}$ values are not define in the unvoiced region, the observation sequence of $F_{0}$ is composed of 1-D continuous values and also discrete values or symbols representing the unvoiced.
+%
+HMMs need to model both the excitation and spectral parameters at the same time, but applying both the conventional discrete and continuous HMMs to model $F_{0}$ cannot be done directly. 
+%
+Thus, to model the $F_{0}$ observation sequence, HMM-based speech systems use multispace probability distributions \cite{tokuda2002multi}. 
+%
+Tipically, the multispace distribution consists of a continuous distribution for the voiced frames an a discrete one for the unvoiced. 
+%
+Switching according to the space label associated with each observation makes possible to model variable dimensional vector sequences, in our case, the $F_{0}$ observation sequence.
+% 
+To keep synchronization between the spectral and the excitation parameters, they are simultaneously modelled by separate streams in a multistream HMM, which uses different output probability distributions depending on the features.
+
+As shown in Figure \ref{fig:hmm_system_overview}, the training takes into account the duration and context to model the different HMMs.
+%
+The duration modelling specifies for each HMM a state-duration probability distribution that are used to model the temporal structure of the speech in detriment of transition probabilities.
+
+The context dependency of the HMMs is needed in speech synthesis to deal with the linguistic specifications.
+%
+Different linguistics contexts, such as tone, pitch accent or speech stress among others, are used by HMM-based speech synthesis to build the HMMs.
+%
+Spectral parameters are mainly affected by phoneme information, but prosodic and duration parameters are also affected by linguistic information. In \cite{tokuda13} some of the contexts used in English can be found.
+
+Finally, it is important to note that there are too many contextual factors in relation with the amount of the speech data available. 
+%
+Increasing the speech data will increase the number of contextual factors and exponentially their combinations.
+%
+Hence, limited amount of data will limit the accuracy and robustness of the HMMs estimation.
+%
+To overcome this issue, tying techniques as state clustering and tying model parameters among several HMMs are used in order to obtain a more robust model parameters estimation.
+%
+It must be noticed that spectral, excitation and duration parameters are clustered separately as they have different context dependency.
+
+Once the HMMs are estimated regarding the considerations explained, the training part is finished and a model is built.
+%
+If the model aims to reproduce one speaker, we would be talking about a speaker-dependent model.
+%
+However, a speaker-adaptive system as the one used in this project aims to synthesize different speakers from one model as starting point.
+%
+This model is called an average voice model and the only difference with the speaker-independent model so far in the HMM-based system construction is that the speech data is composed by several speakers to cover different speaker styles.
+
+\subsubsection{Adaptation}
+\label{hmm_synthesis_adaptation}
+Figure \ref{fig:hmm_system_overview} shows the overview of a general HMM-based speech synthesis system.
+%
+In order to build a speaker-adaptive system, there is a third part that must be added to the structure before the synthesis: adaptation.
+
+As commented previously, HMM-based systems are quite flexible, resulting in a good quality adaptive systems.
+%
+Figure \ref{fig:hmm_system_adapt_overview} illustrates a HMM-based speaker-adaptive system, hence, it is the basic structure of both systems compared in this project.
+
+\begin{figure}[!htb]
+\begin{centering}
+\includegraphics[width=0.8\textwidth]{images/hmm_based_system_adapt_overview.jpg}
+\caption{Overview of an HMM-based speaker-adaptive speech synthesis system \cite{yamagishi2009}}
+\label{fig:hmm_system_adapt_overview}
+\end{centering}
+\end{figure}
