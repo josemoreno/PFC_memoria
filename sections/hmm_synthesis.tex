@@ -231,6 +231,30 @@ However, in the adaptation stage the amount of data is limited, a more robust cr
 The basis of MAP algorithm are explained in \cite{gauvain1994maximum} and an overview is given in \cite{yamagishi2009}.
 
 In SMAP \cite{shinoda2001structural} the tree structures of the distributions effectively cope with the control of the hyperparameters.
+%
+A global transform at the root node is estimated with all the adaptation data and then is propagated to the child nodes, whose transforms are estimated again using their adaptation data and the MAP criterion with the propagated hyperparameters.
+%
+Finally, a recursive MAP-based estimation of the transforms from the root to the lower nodes is conducted.
+
+CSMAPLR algorithm is obtained by applying the SMAP criterion to the CMLLR adaptation and using MAP criterion to estimate the transforms for simultaneously transforming the mean vectors and covariance matrices of state output and duration distributions.
+%
+In Figure \ref{fig:csmaplr_map} this method is illustrated.
+
+\begin{figure}[!htb]
+\begin{centering}
+\includegraphics[width=\textwidth]{images/csmaplr_map.jpg}
+\caption{On the left, CSMAPLR and its related algorithms, and on the right an illustration of a combined algorithm of the linear regression and MAP adaptation}
+\label{fig:csmaplr_map}
+\end{centering}
+\end{figure}
+
+Conclusions in \cite{yamagishi2009} state that better and more stable adaptation performance from a small amount of data may be obtained by using gender-dependent average voice models and combining CSMAPLR adaptation with MAP adaptation, as shown in Figure \ref{fig:csmaplr_map}.
+
+In this project we make two rounds of CSMAPLR adaption followed by one round of MAP adaptation, in order to adapt the average voice model with noisy data.
+%
+Each of the adaptations done generate models from which the parameters for synthesis can be generated.
+%
+Based on the synthetic speech generated from every different model, the unanimous conclusion is that the best quality is obtained when the three adaptation rounds are conducted. 
 
 \subsubsection{Synthesis}
 \label{hmm_synthesis_synthesis}
