@@ -206,6 +206,38 @@ In \cite{tokuda13} we can find several issues where adaptation techniques are he
 
 Within the speaker-adaptive challenge, several techniques to approach a satisfying solution are available. 
 %
-\cite{yamagishi2009} proposes an adaptation algorithm called constrained structural maximum a posterior lineal regression (CSMAPLR).
+\cite{yamagishi2009} proposes an adaptation algorithm called constrained structural maximum a posterior lineal regression (CSMAPLR) and compares several adaptation algorithms to figure out which one to use in which conditions.
+
+The adaptations made during this project and in \cite{karhila_jstsp_14} use the CSMAPLR algorithm.
 %
-Several adaptation algorithms are compared in different conditions to figure out which one to use 
+This algorithm combines different adaptation algorithms in a defined order. The algorithms used are:
+
+\begin{itemize}
+	\item Constrained maximum-likelihood liner regression (CMLLR)
+	\item Maximum a posteriori (MAP)
+	\item Structural maximum a posterior (SMAP)
+\end{itemize}
+
+When adapting in speech synthesis, it is important to adapt both the mean vectors and covariance matrices of the output and duration probability density functions, as the covariance is also an important factor affecting synthetic speech.
+%
+This is the reason to use CMLLR in stead of the unconstrained version.
+
+The CMLLR adaptation algorithm uses the maximum-likelihood criterion \cite{digalakis1995speaker, gales1998maximum} to estimate the transforms. 
+%
+The criterion works well when large amount of data is available.
+%
+However, in the adaptation stage the amount of data is limited, a more robust criterion must be found: MAP.
+%
+The basis of MAP algorithm are explained in \cite{gauvain1994maximum} and an overview is given in \cite{yamagishi2009}.
+
+In SMAP \cite{shinoda2001structural} the tree structures of the distributions effectively cope with the control of the hyperparameters.
+
+\subsubsection{Synthesis}
+\label{hmm_synthesis_synthesis}
+The lower part of Figures \ref{fig:hmm_system_overview} and \ref{fig:hmm_system_adapt_overview} show the synthesis part of an HMM-based speech synthesis system.
+%
+The first step is to convert the given text into a sequence of context dependent labels.
+%
+Then, context-dependent HMMs are concatenated according to the labels calculated in the previous step, determining the duration of each state to maximize its probability based on its state duration probability distribution.
+%
+Once the original sentence has been translated to context-dependent HMMs, a sequence of speech parameters is generated and using both the spectral and excitation parameters the speech waveform is produced by the correspondent vocoder. 
