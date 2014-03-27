@@ -113,6 +113,28 @@ These experiments consist on analysis and resynthesis of the noisy data varying 
 \label{fig:noise_red_lim_mcd}
 \end{centering}
 \end{figure}
-Figures \ref{fig:noise_red_snr}, \ref{fig:noise_red_mcd}, \ref{fig:noise_red_lim_snr} and \ref{fig:noise_red_lim_mcd} illustrate the evolution of the SNR and MCD measures when varying $NOISE\_REDUCTION\_DB$ with a fixed $NOISE\_REDUCTION\_LIMIT$ and vice versa.
+Figures \ref{fig:noise_red_snr}, \ref{fig:noise_red_mcd}, \ref{fig:noise_red_lim_snr} and \ref{fig:noise_red_lim_mcd} illustrate the evolution of the SNR and MCD measures when varying NOISE\_REDUCTION\_DB with a fixed NOISE\_REDUCTION\_LIMIT and vice versa.
 %
-As it can be seen, for a fixed noise reduction limit the SNR measures 
+As it can be seen in Figure \ref{fig:noise_red_snr}, for a fixed noise reduction limit the SNR measures increase significantly (higher SNR scores mean better quality) between 20 and 35dB noise reduction for the cases of clean and babble 20dB samples, reaching a limit.
+%
+Also, there is a slight improvement in the case of machine gun 0dB noise, but in the rest of the cases no improvement is seen.
+%
+As SNR scores increase MCD follows a similar patter (higher MCD scores mean worse quality).
+%
+In Figure \ref{fig:noise_red_mcd} it can be seen that the cases where the SNR was increasing are the ones with an increase of the MCD scores.
+%
+The ones with steady SNR scores have no changes in the MCD either.
+
+The case where NOISE\_REDUCTION\_DB is fixed and the variation is made in the NOISE\_REDUCTION\_LIMIT is presented in Figures \ref{fig:noise_red_lim_snr} and \ref{fig:noise_red_lim_mcd}.
+%
+When increasing the NOISE\_REDUCTION\_LIMIT a steady increase of the SNR scores is only appreciable in the case of babble 20dB background samples.
+%
+All the other cases remain stable, although a very small increase, not significant, can be spot for clean and machine gun 0dB cases.
+%
+MCD scores follow the same pattern explained before. 
+%
+Babble 20dB has both increases in SNR and MCD.
+% 
+Not so big as in babble 20dB case increases in MCD can be found also for the clean and machine gun cases, probably due to the small improvement appreciated in their SNR.
+
+It can be conclude that 
