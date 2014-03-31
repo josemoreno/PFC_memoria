@@ -22,7 +22,7 @@ However, a proper modelling of the glottal pulse shape improves the quality in t
 %
 This particular behavior is the reason of working with a male average voice model, knowing that glottal inverse filtering approach flaws when synthesizing high-pitched voices.
 
-The first step is testing the performance in analysis-resynthesis of GlottHMM when noisy data is used, in order to see if GlottHMM suffer any huge inconvenient caused by the noise.
+The first step is testing the performance in analysis-resynthesis of GlottHMM when noisy data is used, in order to see if GlottHMM suffer any huge inconvenient caused by the noise present in the samples. This is done using the analysis and synthesis modules of GlottHMM.
 
 \begin{figure}[!htb]
 \begin{centering}
@@ -137,4 +137,59 @@ Babble 20dB has both increases in SNR and MCD.
 % 
 Not so big as in babble 20dB case increases in MCD can be found also for the clean and machine gun cases, probably due to the small improvement appreciated in their SNR.
 
-It can be conclude that 
+A frame by frame representation of the natural waveform, resynthesized waveforms and SNR and MCD measures for the cases of babble 10dB and 20 dB background noise is shown in Figures \ref{fig:frame_by_frame_babble10} and \ref{fig:frame_by_frame_babble20}.
+
+\begin{figure}[!htb]
+\begin{adjustwidth}{-2.6cm}{}
+\includegraphics[width=1.3\textwidth]{images/babble10_frame_by_frame.jpg}
+\end{adjustwidth}
+\caption{Frame by frame representation of the natural speech with a babble background noise level of 10dB, resynthesized speech after analysis with GlottHMM not using the noise reduction module, resynthesized speech using the noise reduction module and SNR and MCD measures for both synthetic samples}
+\label{fig:frame_by_frame_babble10}
+\end{figure}
+
+\begin{figure}[!htb]
+\begin{adjustwidth}{-2.6cm}{}
+\includegraphics[width=1.3\textwidth]{images/babble20_frame_by_frame.jpg}
+\end{adjustwidth}
+\caption{Frame by frame representation of the natural speech with a babble background noise level of 20dB, resynthesized speech after analysis with GlottHMM not using the noise reduction module, resynthesized speech using the noise reduction module and SNR and MCD measures for both synthetic samples}
+\label{fig:frame_by_frame_babble20}
+\end{figure}
+
+In the case of the waveforms, we can see no difference when the data is corrupted with a 10dB level babble noise, while when the background noise level is 20dB the noise reduction module used by GlottHMM results in an improvement of the quality attending to cleaner synthetic waveform in speech silences and better objective measures, visible for example when the SNR reaches its maximum value (35 dB). 
+
+A comparison between the measures done when resynthesizing using the noise reduction module and without using it is shown in Figures \ref{fig:babble10_clean_vs_noise} and \ref{fig:babble20_clean_vs_noise}. 
+%
+No significant difference can be spotted when talking about the babble 10dB case.
+%
+Nevertheless, in the case of having a babble 20dB background noise, we can point out different frames where the noise reduction module is clearly improving the SNR quality (careful with the different scales in the graph).
+%
+Some frames reach the maximum SNR value (35 dB) while when not using the noise reduction module the same frames form a valley in the SNR graph.
+%
+Other examples of this behavior can be found at the graph.
+
+However, the MCD measures in those cases are contradictory. 
+%
+While the SNR increases, meaning a quality improvement, the MCD also increases creating the opposite effect, a quality decrease.
+
+From all these initial experiments it can be said that the noise reduction included in the GlottHMM vocoder is not capable of carrying out its function when severe noise conditions are found.
+%
+However, when the noise conditions are reasonable to record audio, these first experiments show that GlottHMM gets along quite well in analysis and resynthesys, potentially improving the quality when adapting an HMM-based system. 
+
+\begin{figure}[!htb]
+\begin{adjustwidth}{-2.6cm}{}
+\includegraphics[width=1.3\textwidth]{images/babble10clean_vs_noise.jpg}
+\end{adjustwidth}
+\caption{SNR and MCD measures of a resynthesized sample with babble 10dB background noise using and not using the noise reduction module}
+\label{fig:babble10_clean_vs_noise}
+\end{figure}
+
+\begin{figure}[!htb]
+\begin{adjustwidth}{-2.6cm}{}
+\includegraphics[width=1.3\textwidth]{images/babble20clean_vs_noise.jpg}
+\end{adjustwidth}
+\caption{SNR and MCD measures of a resynthesized sample with babble 20dB background noise using and not using the noise reduction module}
+\label{fig:babble20_clean_vs_noise}
+\end{figure}
+
+\subsection{Average Voice Model}
+\label{experiments_av_voice_model}
