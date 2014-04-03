@@ -1,6 +1,6 @@
 \section{Results}
 \label{results}
-In this section we presented both the objective and the subjective results obtained.
+In this section we present both the objective and the subjective results obtained. The outliers were taken out of the calculations.
 
 \subsection{Objective Results}
 \label{results_objective}
@@ -12,15 +12,13 @@ On the other hand, in Table \ref{table:results_ext_f0_glott} the results for all
 %
 In this case, there is no clean row, as the $F_{0}$ is calculated from the clean samples.
 %
-All the adaptations where done with the noise reduction configuration.
+All the adaptations in this table were done with the noise reduction configuration.
 
-As it can be seen, there are no significant differences between both approaches, what could lead us to think we can use either of the approaches and obtain the same results.
+As it can be seen, there are no significant differences between both approaches, what could lead us to think we can use either of them and obtain the same results.
 %
 However, when listening to the synthesized audio samples it becomes pretty clear that when not using an external $F_{0}$ there is a huge quality drop.
 %
 Therefore, not using an external $F_{0}$ is been rejected from this point on.
-
-
 
 \begin{table}[!htb]
 \begin{center}
@@ -62,6 +60,10 @@ The contradictory results in the case of the GlottHMM-based system still happeni
 Also, the GlottHMM-based system is found to suffer more degradation under severe noise conditions than the STRAIGHT one.
 %
 We can spot that the noise reduction system makes the MCD values to increase, as so as the SNR values, giving the contradictory results previously seen.
+
+In all the objective scores, GlottHMM presents a significantly steeper drop in quality as the noise level increases.
+%
+This drop is clearly audible for SNR 5dB. 
 
 \begin{table}[!htb]
 \begin{center}
@@ -123,31 +125,67 @@ Factory & 5 & 7.1 & 3.3\\
 \subsection{Subjective Results}
 \label{results_subjective}
 In the listening test two male voices were evaluated for different vocoders adaptation and different GlottHMM configurations by 32 native speakers using a web-based test.
-
-Two different AB test were carried out. 
 %
-The first one, 
+The results for both speakers were similar enough to be grouped.
+
+In the AB test two different comparison where made.
+%
+The first one asked the listeners about their preferences between different synthetic speech obtained with the GlottHMM-based system.
+%
+The cases faced were:
+
+\begin{itemize}
+	\item Adapted speech from clean data using the clean configuration against adapted speech from clean data using the noise reduction configuration
+	\item Adapted speech from clean data against adapted speech from babble 20dB data
+	\item Adapted speech from babble 10dB data against the adaptation made from its enhanced version
+\end{itemize}
+
+All of these comparisons were made to find out which of the options the listener preferred, as in Table \ref{table:comp_adapt_results} the scores obtained were very similar.
+%
+Figure \ref{fig:glott_vs_glott} present the results of this firs part of the AB test.
 
 \begin{figure}[!htb]
   \begin{centering}
   \includegraphics[width=\textwidth]{images/glott_vs_glott.pdf}
-  \caption{}
+  \caption{Results of the AB test comparing different adapted voices obtained with the GlottHMM-based system}
   \label{fig:glott_vs_glott}
   \end{centering}
 \end{figure}
 
+In the first two cases, where the adapted voice using clean data and the clean configuration (both samples A) is compared to the one obtained using the noise reduction configuration and babble 20dB data, the results are pretty clear and show a preference to speech using clean data and a clean configuration ($p = 0.043$ and $p \ll 0.0001$).
+%
+For the third case, no significant conclusion can be formulated.
+
+In Figure \ref{fig:glott_vs_st} the results of the AB test comparing GlottHMM-based system to the STRAIGHT-based are shown.
+%
+The comparisons made in these tests are all for the cases where babble noise is found on the background, as is the most common noise you could find when recording speech and also one of the hardest ones to deal with, due to its similar nature with speech.
+
+These results show a slight preference for the GlottHMM samples over the STRAIGHT ones in the case of SNR 10dB and 20dB babble noise in the adaptation data.
+%
+The statistical significance test (binomial test) conducted shows that this preference is only closed to significant at best ( $p = 0.0516$ for SNR 20dB and $p \gg 0.05$ for SNR 10dB).
+%
+Nothing decisive can be said about the case where the adapted speech was obtained with the enhanced data.
+
 \begin{figure}[!htb]
   \begin{centering}
   \includegraphics[width=\textwidth]{images/glott_vs_st.pdf}
-  \caption{}
+  \caption{Results for the AB test comparing the performance of the GlottHMM-based system against the STRAIGHT-based one}
   \label{fig:glott_vs_st}
   \end{centering}
 \end{figure}
 
+Finally, Figure \ref{fig:mos_scores} presents the MOS scores for the listening test.
+%
+The STRAIGHT system is rated slightly higher in naturalness than the GlottHMM-based system for almost all the noise cases.
+%
+In similarity both systems are quite close, with STRAIGHT being slightly better in the case of babble at SNR 20dB.
+%
+Background quality is rated very evenly for the STRAIGHT-based systems, whereas the GlottHMM is highly affected when the SNR drops from 20dB to 10dB.
+
 \begin{figure}[!htb]
   \begin{centering}
-  \includegraphics[width=\textwidth]{images/all_subjective_test_quality.pdf}
-  \caption{}
+  \includegraphics[width=0.75\textwidth]{images/all_subjective_test_quality.pdf}
+  \caption{Mean opinion scores (MOS) for the second part of the listening test. Median is denoted by the red line, boxes cover 25th and 75th percent percentiles, whiskers cover the data not considered outliers. The notches mark the 95\% confidence interval for the median}
   \label{fig:mos_scores}
   \end{centering}
 \end{figure}
