@@ -40,7 +40,7 @@ The test framework consists on two parts implemented as a web interface that pre
 %
 The first part of the test is an AB test to find out with of the systems, GlottHMM-based or STRAIGHT-based, is preferred for everyday use.
 %
-This test is a statistical significance binomial test, where the two options are mutually exclusive with the same initial probability.
+The statistical test used to verify the significance of the AB test results is the binomial test, where the two options are mutually exclusive with the same initial probability.
 %
 However, they could sound the same to the listeners and a third option was added, indicating they do not find any difference between the samples.
 %
@@ -48,6 +48,6 @@ Statistically, every time someone chooses the no difference option it counts as 
 %
 Moreover, to find out significance among the results, the accumulative probability must be calculated and if the value of the less probable of the tested options is equal or less than 0.05 we can place in the results in the significance region of the binomial distribution \cite{howell2012statistical}.
 
-In the second part, the listeners were asked rate either the speech signal, the background quality or the similarity to the natural correspondent voice.
+In the second part, a mean opinion score (MOS) test where the listeners were asked to rate either the speech signal, the background quality or the similarity to the natural correspondent voice.
 
 As the silences models could be affected with the adaptation procedures used in this work, i.e. synthesized noise can be introduced at the beginning and end of the synthetic utterances, allowing listeners to adapt to the background noise, the ITU-T recommendation \cite{itut835} was followed and eliminating those noises.

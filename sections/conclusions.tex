@@ -5,48 +5,52 @@
 \label{conclusions_discussion}
 Both of the evaluated systems are capable of producing high quality synthetic speech.
 %
-The STRAIGHT-based system gets slightly higher scores in some of the evaluated aspects when listening to single sentences and rated them in a MOS style. 
+The STRAIGHT-based system is slightly better rated  in some of the evaluated aspects when listening to single sentences in the MOS test.
 %
 However, when comparing samples between two systems listeners displayed no preference for STRAIGHT-based over GlottHMM-based system.
 %
-The listening test used in this work has previously given consistent results in both preference and MOS tests \cite{karhila_jstsp_14}.
+The listening test used in this work has previously given consistent \cite{karhila_jstsp_14}.
 %
-In that case, the tests were conducted on an identical framework for voice building, varying only the noise level.
+However, in \cite{karhila_jstsp_14} the tests were conducted on an identical framework for voice building, varying only the noise level, while in this project two different frameworks where used.
 %
-When comparing different vocoders many factors could bias the test, such as different feature stream dimensions that allow different clustering thresholds, or perform model alignment in a different way.
+When comparing different vocoders many factors could bias the test. For example, having different feature stream dimensions allow different clustering thresholds.
 %
-The listener might be very disciplined in rated samples based on the MOS test questions.
+Therefore, the listener might be very disciplined when rating samples based on the MOS test questions.
 %
-In the listener's opinion smooth voices (STRAIGHT) sounds more natural and more similar to target speaker but for the imagined listening experience a more varying voice (GlottHMM), even with some imperfections, might be preferred.
+In the listener's opinion smooth voices (STRAIGHT) sounds more natural and more similar to target speaker but a more varying voice (GlottHMM), even with some imperfections, might be preferred for an everyday use.
 
-The results of the objective evaluation show another aspect of the inherent difficulty of vocoder evaluation in complex systems.
+The results of the objective evaluation show the difficulties found to evaluate a vocoder in complex systems.
 %
-The fwSNRseg and MCD scores for the two vocoders not only react very different to the increase of noise, ut are contradicting each other in quality assessment.
+The fwSNRseg and MCD scores for the two vocoders not only react very different to the increase of noise, but are contradicting to each other in quality assessment.
 %
-The STRAIGHT system have been trained with MCEP-formatted speech data while the GlottHMM emphasizes on formant modelling.
+Specially, in the case of GlottHMM it has been noticed that during the silences found within utterances each of the measures used leads to an opposite conclusion over the speech quality.
 %
-This might be partial cause of the STRAIGHT system scoring far better in MCD and the GlottHMM doing the same with the perceptually motivated fwSNRseg.
+To solve the problem spotted on the silences, the evaluation methods could take into account, for example, the differential energy of the speech signal, as in the silences, even in the presence of noise, a significant energy drop should be noticed.
+%
+Besides, the STRAIGHT system have been trained with MCEP-formatted speech data while the GlottHMM emphasizes on formant modelling, which might be partial cause of the STRAIGHT system scoring far better in MCD and the GlottHMM doing the same with the perceptually motivated fwSNRseg.
 
 Relaying on only one objective measure would not be a great idea when technical choices must be done.
 %
-Furthermore, some kind of unified metric for objective evaluation should be developed wit larger amounts of different synthesis systems based on different technologies.
+Objective evaluation metrics should be developed looking to unify the evaluation of different technologies facilitating the comparisons.
 
 \subsection{Conclusion}
 \label{conclusions_conclusion}
-A speaker-adaptive, based on the GlotHMM vocoder, speech system was built and compared to a STRAIGHT MCEP-based HMM-system.
+A speaker-adaptive, based on the GlotHMM vocoder, speech system was built and compared to a STRAIGHT MCEP-based HMM-system built in \cite{karhila_jstsp_14}.
 %
 Speaker adaptation data corrupted by different noises at varying SNR levels were used, but only babble noise was used in the comparison between systems.
 %
-The systems were initially evaluated with objective evaluation methods, yielding contradictory results that require further investigation.
+The system were first evaluated using objective methods that led to contradictory results that need further investigation.
 %
-Formal listening tests showed that technically the STRAIGHT-based system was rated slightly higher in terms of naturalness.
+Formal listening tests showed that the STRAIGHT-based system was percieved as slightly higher than the GlottHMM-based one in terms of naturalness.
 %
 Differences in similarity were very small.
 %
-Background noise quality showed that GlottHMM is more susceptible to degradation in more severe noise conditions.
+GlottHMM was found to be more susceptible to degradation in more severe noise conditions in both the objective and subjective evaluations conducted.
 %
 The preference tests did not show any significant differences between the systems.
 
-GlottHMM has been shown to produce a better quality synthetic speech when the system is trained with noise-free data.
+GlottHMM has been shown to generate high-quality synthetic speech when the system is trained using noise-free data.
 %
-The tests conducted in this work showed that the GlottHMM vocoder is more susceptible to severe noise than the competing STRAIGHT vocoder, but when the amount of background noise present is small it works well enough.
+The tests conducted in this project pointed out that GlottHMM is susceptible to severe noise present in the background, while STRAIGHT is more robust.
+%
+If small amounts of noise are found in the background, GlottHMM works well enough.

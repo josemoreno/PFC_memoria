@@ -2,8 +2,6 @@
 \label{experiments}
 In mobile voice manipulation applications and in found data cases, it is mandatory to use audio recorded far from the ideal studio conditions, with the possibility of finding background noise.
 %
-The speaker-adaptive HMM-based paradigm has been found quite robust on mel-cepstrum \cite{karhila_jstsp_14, yamagishi2008robustness} and LSP-based vocoders \cite{yanagisawa2013noise}.
-%
 Nevertheless, in some vocoding and adaptation techniques noise present in the adaptation data can add background noise and produce distortion in the synthetic speech signal.
 
 A GlottHMM-based speaker-adaptive statistical speech synthesis is built in this project, testing the effects of using noisy data in the adaptation.
@@ -13,6 +11,8 @@ The different noises included in the adaptation data are: babble noise, factory 
 These noises where artificially added into clean data.
 %
 The results will be compared to the ones obtained with the STRAIGHT-based system in \cite{karhila_jstsp_14}.
+
+From now on, we will refer to noise reduction configuration as the one set by the parameter values shown in Appendix \ref{glott_conf_noise_red} (set to true).
 
 \subsection{Initial Experiments}
 \label{experiments_initial}
@@ -143,15 +143,15 @@ A frame by frame representation of the natural waveform, resynthesized waveforms
 \begin{adjustwidth}{-2.6cm}{}
 \includegraphics[width=1.3\textwidth]{images/babble10_frame_by_frame.jpg}
 \end{adjustwidth}
-\caption{Frame by frame representation of the natural speech with a babble background noise level of 10dB, resynthesized speech after analysis with GlottHMM not using the noise reduction module, resynthesized speech using the noise reduction module and SNR and MCD measures for both synthetic samples}
+\caption{Frame by frame representation of the natural speech with a babble background noise level of 10dB, resynthesized speech after analysis with GlottHMM not using the noise reduction module values in Appendix \ref{glott_conf_noise_red} (set to true), resynthesized speech using the noise reduction module and SNR and MCD measures for the last synthetic sample}
 \label{fig:frame_by_frame_babble10}
 \end{figure}
 
 \begin{figure}[!hb]
 \begin{adjustwidth}{-2.6cm}{}
-\includegraphics[width=1.3\textwidth]{images/babble20_frame_by_frame.jpg}
+\includegraphics[width=1.3\textwidth]{images/babble20_frame_by_frame.pdf}
 \end{adjustwidth}
-\caption{Frame by frame representation of the natural speech with a babble background noise level of 20dB, resynthesized speech after analysis with GlottHMM not using the noise reduction module, resynthesized speech using the noise reduction module and SNR and MCD measures for both synthetic samples}
+\caption{Frame by frame representation of the natural speech with a babble background noise level of 20dB, resynthesized speech after analysis with GlottHMM not using the noise reduction module values in Appendix \ref{glott_conf_noise_red} (set to true), resynthesized speech using the noise reduction module and SNR and MCD measures for the synthetic samples}
 \label{fig:frame_by_frame_babble20}
 \end{figure}
 
@@ -170,6 +170,8 @@ Other examples of this behavior can be found at the graph.
 However, the MCD measures in those cases are contradictory. 
 %
 While the SNR increases, meaning a quality improvement, the MCD also increases creating the opposite effect, a quality decrease.
+%
+This behavior has been noticed in the silences present along the utterance.
 
 From all these initial experiments it can be said that the noise reduction included in the GlottHMM vocoder is not capable of carrying out its function when severe noise conditions are found.
 %
@@ -179,7 +181,7 @@ However, when the noise conditions are reasonable to record audio, these first e
 \begin{adjustwidth}{-2.6cm}{}
 \includegraphics[width=1.3\textwidth]{images/babble10clean_vs_noise.jpg}
 \end{adjustwidth}
-\caption{SNR and MCD measures of a resynthesized sample with babble 10dB background noise using and not using the noise reduction module}
+\caption{SNR and MCD measures of a resynthesized sample with babble 10dB background noise using and not using the noise reduction module (values in Appendix \ref{glott_conf_noise_red}, set to true)}
 \label{fig:babble10_clean_vs_noise}
 \end{figure}
 
@@ -187,7 +189,7 @@ However, when the noise conditions are reasonable to record audio, these first e
 \begin{adjustwidth}{-2.6cm}{}
 \includegraphics[width=1.3\textwidth]{images/babble20clean_vs_noise.jpg}
 \end{adjustwidth}
-\caption{SNR and MCD measures of a resynthesized sample with babble 20dB background noise using and not using the noise reduction module}
+\caption{SNR and MCD measures of a resynthesized sample with babble 20dB background noise using and not using the noise reduction module (values in Appendix \ref{glott_conf_noise_red}, set to true)}
 \label{fig:babble20_clean_vs_noise}
 \end{figure}
 
@@ -209,17 +211,19 @@ The final feature vector used in this system is a 183-dimension vector composed 
 	\item 30 LSF components + 1 energy
 	\item 10 LSF source
 	\item 5 harmonic-to-noise ratio (HNR)
-	\item 3  $F_{0}$
+	\item 1  $F_{0}$
 	\item 14 Aurora components
 \end{itemize}
 
-From all the features except for the 3 $F_{0}$ that form the multi-space distribution and the Aurora features the scripts used calculate the dynamic features (delta and delta-delta). 
+From all the features except for the Aurora features the scripts used calculate the dynamic features (delta and delta-delta). 
 %
-The dynamic features for the Aurora are calculated with the ETSI advanced front-end.
+The dynamic features for the Aurora are calculated with a snippet of the scripts used that does the delta-calculation.
 %
 The addition of all the static and dynamic features gives the 183-dimension of the final feature vector.
 
-It must be pointed out that during the training the Aurora features have no function.
+It must be pointed out that during the training the Aurora features have no function, but they were investigated in \cite{karhila_jstsp_14} together with STRAIGHT features founding out that they improve the alignment when adaptation was not used, reason why they were tested in this project.
+%
+Unfortunately, no improvement was obtained over the LSF features in the case of the GlottHMM-based system.
 %
 The system learns about them during the training to be able to adapt according to the noise robustness provided by these features.
 %
@@ -241,7 +245,7 @@ To train the model, a modified version of the EMIME 2010 Blizzard Entry \cite{em
 %
 The third iteration gives us the multi-space distribution hidden semi-Markov models (MSD-HSMM) forming the average voice model.
 
-The STRAIGHT voice is trained identically in \cite{karhila_jstsp_14}.
+The STRAIGHT voice is trained identically to \cite{karhila_jstsp_14}.
 
 \subsection{Adaptation}
 \label{experiments_adaptation}
@@ -257,7 +261,7 @@ The adaptation transforms are calculated using a combined algorithm with linear 
 %
 Two rounds of CSMAPLR followed by one round of MAP adaptation conform the combined algorithm.
 
-The regression trees were limited to 64 leaf nodes to obtain robust adaptation transforms.
+The regression trees were limited to 64 leaf nodes to obtain robust adaptation transforms, after discovering by trial and error that higher values carried a decrease in the quality of the synthetic speech.
 %
 Due to the noise present in the data, more data is needed in one node to strengthen the transforms.
 %

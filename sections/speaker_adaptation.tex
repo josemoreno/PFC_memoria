@@ -2,9 +2,9 @@
 \label{noise_speaker_adaptation}
 Adapting from an average voice model is an efficient way of dealing with limited amount of data.
 %
-Using the noisy data in the adaptation allows us to use a smaller amount of data than the needed to build a model starting from scratch.
+Using the noisy data in the adaptation allows us to use a smaller amount of data corrupted than the needed if we use it in building a model starting from scratch.
 %
-Therefore, the less noisy data used, the less corrupted feature vectors that will be used to obtain the final voice model.
+Therefore, less feature vectors corrupted by noise are used to estimate the final models.
 
 Noise present in the adaptation data can add background noise to the synthetic speech or reduce its naturalness or similarity compared to adaptation done with clean data \cite{karhila_jstsp_14}.
 %
@@ -16,9 +16,9 @@ In this work we focus on the GlottHMM vocoder and compare it to the STRAIGHT voc
 %
 Both vocoders model the excitation of the voice differently.
 %
-The GlottHMM is based on glottal inverse filtering while STRAIGHT features pitch-adaptive extraction of spectrum (see Section \ref{vocoders}).
+The GlottHMM estimates glottal pulse via inverse filtering while STRAIGHT features pitch-adaptive extraction of spectrum (see Section \ref{vocoders}).
 
-Environmental noise can interfere with speech, as not all kind of noises can be filtered out the signal without damaging the speech.
+Environmental noise can interfere with speech, as not all kind of noises can be filtered out of the signal without damaging the speech.
 %
 Specially, noise signals that are time (and frequency) variant and occupy the same frequency bands provides the most difficult and challenging cases.
 %
@@ -26,7 +26,7 @@ When the noise cannot be removed the system must tolerate it.
 %
 In this project three different noises are studied: babble, factory and machine gun noises.
 %
-Among them, the most interesting one is the babble noise, because of its similar nature with speech and because it is the more common noise present when recording speech, as usually factories or environments involving gunfire are not usually chosen for, for example, interviewing people.
+Among them, the most interesting one is the babble noise, because of its similar nature with speech and because it is the more common noise present when recording speech, as usually factories or environments involving gunfire are not chosen for, for example, interviewing people.
 %
 As this is the most interesting case, the comparison between the GlottHMM and STRAIGHT vocoders is done for these cases.
 
@@ -37,7 +37,7 @@ The ability to focus on the speech signal and smooth out the extra noise varies 
 \begin{figure}[!htb]
 \begin{centering}
 \includegraphics[width=\textwidth]{images/vowel_frame_and_noise_w_fft.pdf}
-\caption{Spectra for GlottHMM LSF (left), STRAIGHT MCEP components (middle) and FFT MCEP components (right) of a male speaker's vowel frame, with added babble (top) or band-limited Gaussian noise in the 300-700 Hz frequency band (bottom), shown in the figures in grey [Reima Karhila]}
+\caption{Spectra for GlottHMM LSF (left), STRAIGHT MCEP components (middle) and FFT MCEP components (right) of a male speaker's vowel frame, with added babble (top) or band-limited Gaussian noise in the 300-700 Hz frequency band (bottom), shown in the figures in grey \cite{moreno_interspeech}}
 \label{fig:different_specs_noise}
 \end{centering}
 \end{figure}
@@ -89,7 +89,7 @@ Valleys and peaks are moved and specially the LSF spectra shows more severe effe
 	 & 5 & 10.1 & 2.2 & 8.8 & 2.2 & 9.1 & 3.1\\
 	\bottomrule
 \end{tabular}
-\caption{Averaged fwSNRseg and MCD measures for 3 speakers. For the GlottHMM vocoder in clean conditions two results are shown: the below one uses the noise reduction system. All noise-affected systems use the noise reduction mechanism}
+\caption{Averaged fwSNRseg and MCD measures for 3 speakers. For the GlottHMM vocoder in clean conditions two results are shown: the below one uses the noise reduction system. All noise-affected systems use the noise reduction mechanism. The STRAIGHT values were calculated in \cite{karhila_jstsp_14}}
 \label{table:an_resyn_results}
 \end{centering}
 \end{table}
