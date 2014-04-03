@@ -20,6 +20,7 @@
 \usepackage{chngpage}
 \usepackage{booktabs}
 \usepackage{framed}
+\usepackage{longtable}
 
 %% Use this if you want to get links and nice output with pdflatex
 \usepackage[pdfpagemode=None,colorlinks=true,urlcolor=red,%
@@ -177,6 +178,7 @@ Otaniemi, 24.9.2013
 	MLSA		& Mel Log Spectrum Approximation\\
 	MFCC		& Mel-Frequency Cepstral Coefficient\\
 	MOS			& Mean Opinion Score\\
+	MSD-HSMM	& Multi-Space Distribution Hidden Markov Models\\
 	PSOLA		& Pitch-Synchronous OverLap-Add\\
 	SAT			& Speaker-Adaptive Training\\
 	SMAP 		& Structural Maximum A Posteriori\\
@@ -200,6 +202,8 @@ Otaniemi, 24.9.2013
 \include{sections/vocoders}
 \include{sections/speaker_adaptation}
 \include{sections/experiments}
+\include{sections/evaluation}
+\include{sections/results}
 %\section{Introduction}
 
 %% Leave first page empty
@@ -242,4 +246,14 @@ Otaniemi, 24.9.2013
 \setcounter{table}{0}
 \input{sections/glott_conf}
 
+\newpage
+\section{Questions of the Listening Test}
+\label{test_questions}
+\renewcommand{\theequation}{B\arabic{equation}}
+\setcounter{equation}{0}  
+\renewcommand{\thefigure}{B\arabic{figure}}
+\setcounter{figure}{0}
+\renewcommand{\thetable}{B\arabic{table}}
+\setcounter{table}{0}
+\input{sections/list_quest.tex}
 \end{document}

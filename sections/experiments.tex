@@ -183,7 +183,7 @@ However, when the noise conditions are reasonable to record audio, these first e
 \label{fig:babble10_clean_vs_noise}
 \end{figure}
 
-\begin{figure}[!htb]
+\begin{figure}[!hb]
 \begin{adjustwidth}{-2.6cm}{}
 \includegraphics[width=1.3\textwidth]{images/babble20clean_vs_noise.jpg}
 \end{adjustwidth}
@@ -191,5 +191,100 @@ However, when the noise conditions are reasonable to record audio, these first e
 \label{fig:babble20_clean_vs_noise}
 \end{figure}
 
+\subsection{Feature Extraction}
+\label{experiments_feature_extraction}
+The GlottHMM vocoder includes an analysis module that extract the features from audio files.
+%
+However, the features extracted with this module are only the static features. 
+%
+Other features have to be calculated, such as the dynamic features, and in our case, noise robust features could be helpful in the adaptation process.
+%
+These noise robust features are the Aurora features \cite{etsi202}, calculated with the ETSI advanced front-end.
+%
+For calculating the rest of the features, the dynamic ones and the Global Variance (GV) \cite{toda2005speech}, used to solve over-smoothing problems, the scripts developed by Antti Suni, from the University of Helsinki, are used.
+
+The final feature vector used in this system is a 183-dimension vector composed by:
+
+\begin{itemize}
+	\item 30 LSF components + 1 energy
+	\item 10 LSF source
+	\item 5 harmonic-to-noise ratio (HNR)
+	\item 3  $F_{0}$
+	\item 14 Aurora components
+\end{itemize}
+
+From all the features except for the 3 $F_{0}$ that form the multi-space distribution and the Aurora features the scripts used calculate the dynamic features (delta and delta-delta). 
+%
+The dynamic features for the Aurora are calculated with the ETSI advanced front-end.
+%
+The addition of all the static and dynamic features gives the 183-dimension of the final feature vector.
+
+It must be pointed out that during the training the Aurora features have no function.
+%
+The system learns about them during the training to be able to adapt according to the noise robustness provided by these features.
+%
+However, during the experiments it was discovered that adapting with the Aurora features in stead of the LSFs not only does not produce any improvements but the results were clearly poorer.
+%
+This was obviously noticed after adapting. 
+%
+Therefore, although the Aurora features are not used at all, they must be calculated in the adaptation data because of the construction of the average voice model, which embodies them in its feature vector composition.
+
 \subsection{Average Voice Model}
 \label{experiments_av_voice_model}
+As a proper modelling of the glottal pulse has been shown to improve the quality of low $F_{0}$ voices while higher $F_{0}$ ones do not benefit as much (impulse excitation can be adequate for them), we are focusing on male voices.
+
+The average voice model of the speaker-adaptive speech synthesis system built in this work is trained on speech data from the Finnish PERSO corpus, with the features obtained as described in Section \ref{experiments_feature_extraction}.
+%
+20 male voices from this corpus were used.
+
+To train the model, a modified version of the EMIME 2010 Blizzard Entry \cite{emime_blizzard} was used, using SAT and 3 reclustering iterations, using the configuration for GlottHMM attached in Appendix \ref{glott_conf_file}, where the noise reduction module is not used: clean configuration. 
+%
+The third iteration gives us the multi-space distribution hidden semi-Markov models (MSD-HSMM) forming the average voice model.
+
+The STRAIGHT voice is trained identically in \cite{karhila_jstsp_14}.
+
+\subsection{Adaptation}
+\label{experiments_adaptation}
+Once the average voice model trained with high-quality data is ready, we can use the noisy data to adapt to different target speakers.
+
+Three different types of noise were used in this project: Babble, factory and machine gun noise, with different SNR levels.
+%
+The noisy samples were obtained adding noise from the NOISEX-92 corpus \cite{Varga1993247} to utterances from the EMIME corpus \cite{wester_accent2010}.
+%
+105 utterances from each of the three target speakers conform the training of the adaptation transforms.
+
+The adaptation transforms are calculated using a combined algorithm with linear regression and MAP adaptation (see \ref{hmm_synthesis_adaptation}).
+%
+Two rounds of CSMAPLR followed by one round of MAP adaptation conform the combined algorithm.
+
+The regression trees were limited to 64 leaf nodes to obtain robust adaptation transforms.
+%
+Due to the noise present in the data, more data is needed in one node to strengthen the transforms.
+%
+Moreover, to correct some mistaken phoneme's durations a realignment of the test labels using the average voice model was done prior to the synthesis.
+
+Finally, speech enhancement based on non-negative matrix factorization \cite{raj_interspeech2010} was carried out to test the benefits, if any, obtained.
+%
+The adaptation procedure with the enhanced data is similar to the noisy cases.
+
+The values of the noise reduction parameters shown in Appendix \ref{glott_conf_noise_red} are the values used in the noise reduction configuration of GlottHMM.
+%
+When the energy of the frame is below 4.5dB (noise reduction limit) the gain of the frame is reduced by 35dB (noise reduction).
+
+In the adaptation of all the noisy cases the noise reduction configuration is used.
+%
+Also, adaptation using clean data is done using both the clean configuration and the noise reduction configuration.
+%
+Using both configurations is done to compare due to the results obtained in Section \ref{experiments_initial}.
+
+\subsection{Synthesis}
+\label{experiments_synthesis}
+The voices of three different male speakers under different noise conditions were synthesized during this work.
+%
+The clean and all the noisy cases were synthesized using the $F_{0}$ extracted from each case.
+%
+However, the problems with its estimation are clearly audible when comparing to the synthesis done with an external $F_{0}$ extracted from the clean data of each speaker.
+%
+The comparison to the STRAIGHT synthesized speech is done using the external $F_{0}$ synthetic samples obtained with the GlottHMM-based system, focusing on the effects of noise in the spectral components.
+
+Both systems where constructed using the HTK toolkit \cite{young1997htk} and in the case of the GlottHMM-based one, a single, generic pulse was used to produce speech.

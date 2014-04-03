@@ -1,50 +1,53 @@
-\begin{table}[width=8cm]
-	\begin{framed}
-	$\rhd$ \underline{Natural reference speech sample}\\
-	$\rhd$ \underline{Synthesized speech sample A}\\
-	$\rhd$ \underline{Synthesized speech sample B}\\
-	\\
-	Play the reference sentence. Then play both sample sentences. Considering the OVERALL QUALITY of the signal, select the one you would prefer to represent the reference voice in applications like mobile devices, video games, audio books etc. Regarding the OVERALL QUALITY
-	\begin{itemize}
-	\item[A.] First sample is better
-	\item[B.] Second sample is better
-	\item[C.] They sound exactly the same
-	\end{itemize}
-	\end{framed}
-	\begin{framed}
-	$\rhd$ \underline{Synthesized speech sample}\\
-	Play the sample and attending ONLY to the SPEECH SIGNAL, select the category which best describes the sample you just heard. The SPEECH SIGNAL in this signal was
-	\begin{itemize}
-	\item[5.] Completely natural
-	\item[4.] Quite natural
-	\item[3.] Somewhat unnatural but acceptable
-	\item[2.] Quite unnatural
-	\item[1.] Completely unnatural
-	\end{itemize}
-	\end{framed}
-	\begin{framed}
-	$\rhd$ \underline{Synthesized speech sample}\\
-	Play the sample and attending ONLY to the BACKGROUND, select the category which best describes the sample you just heard. The BACKGROUND in this signal was
-	\begin{itemize}
-	\item[5.] Clean
-	\item[4.] Quite clean
-	\item[3.] Somewhat noisy but not intrusive
-	\item[2.] Quite noisy and somewhat intrusive
-	\item[1.] Very noisy and very intrusive
-	\end{itemize}
-	\end{framed}
-	\begin{framed}
-	$\rhd$ \underline{Natural reference speech sample}\\
-	$\rhd$ \underline{Synthesized speech sample}\\
-	Play both samples, and attending ONLY to the SPEECH SIGNAL, select the category which best describes the second sample to the reference sample.The voices in the SPEECH SIGNALS of the samples sounded
-	\begin{itemize}
-	\item[5.] Exactly like the same person
-	\item[4.] Quite like the same person
-	\item[3.] Somewhat different but recognizable
-	\item[2.]Quite like a different person
-	\item[1.] Like a totally different person
-	\end{itemize}
-	\end{framed}
-\caption{Questions used in the subjective evaluation}
-\label{table:test_questions}
-\end{table}
+\section{Evaluation}
+\label{evaluation}
+To evaluate the different synthetic voices we must implement to different types of measures: objective and subjective.
+%
+The objective measures aim to provide quantitative scores indicating the quality of the analyzed samples according to defined parameters.
+%
+Meanwhile, the subjective tests conducted for speech synthesis provide the listeners' opinions and preferences.
+
+\subsection{Objective Evaluation}
+\label{evaluation_objective}
+Two different measures are used in this project.
+
+The first one is a common measure for objective evaluation of speech synthesis quality: the mel-cepstral distortion (MCD) calculated between natural speech sentences and the corresponding synthesized sentences \cite{601}.
+%
+It is calculated for D-dimensional features as
+
+\begin{centering}
+\begin{equation}
+MCD = \frac{1}{M}\sum_{m = 1}^{M}\sqrt{2\sum_{d=0}^{D-1}(c(d,m)-\hat{c}(d,m))^{2}},
+\end{equation}
+\end{centering}
+
+where $\hat{c}(d,m))$ and $c(d,m)$ are the $d$th coefficient in test and reference mel-cepstra in time frame $m$, and $M$ denotes the number of frames.
+
+As in \cite{karhila_jstsp_14}, in this project the MCD is used in conjunction with a Frequency Weighted Segmental SNR (fwSNRseg) based on the energy of the segments \cite{4389058}, calculated as
+
+\begin{centering}
+\begin{equation}
+fwS = \frac{10}{M}\sum_{m=1}^{M}\frac{\sum_{j=1}^{K}W(j,m)log_{10}\frac{X(j,m)^{2}}{(X(j,m)-\hat{X}(j,m))^{2}}}{\sum_{j=1}^{K}W(j,m)},
+\end{equation}
+\end{centering}
+
+where $\hat{X}(j,m)$ is the test signal value in the $j$th mel filter channel in time frame $m$, $X(j,m)$ is the reference signal value in the same mel filter channel, and $W(j,m) = X(j,m)^{\gamma}$ with $\gamma = 0.2$ as in \cite{4389058}.
+
+\subsection{Subjective Evaluation}
+\label{evaluation_subjective}
+In \cite{karhila_remes_icassp13} a test for noisy synthesis cases is proposed based loosely on the ITU-T recommendation for noise-suppression algorithms \cite{itut835}, when background noise added to the synthetic speech can mask some artifacts.
+%
+The test framework consists on two parts implemented as a web interface that presented the questions in Appendix \ref{test_questions}.
+%
+The first part of the test is an AB test to find out with of the systems, GlottHMM-based or STRAIGHT-based, is preferred for everyday use.
+%
+This test is a statistical significance binomial test, where the two options are mutually exclusive with the same initial probability.
+%
+However, they could sound the same to the listeners and a third option was added, indicating they do not find any difference between the samples.
+%
+Statistically, every time someone chooses the no difference option it counts as half vote for both of the options in the question.
+%
+Moreover, to find out significance among the results, the accumulative probability must be calculated and if the value of the less probable of the tested options is equal or less than 0.05 we can place in the results in the significance region of the binomial distribution \cite{howell2012statistical}.
+
+In the second part, the listeners were asked rate either the speech signal, the background quality or the similarity to the natural correspondent voice.
+
+As the silences models could be affected with the adaptation procedures used in this work, i.e. synthesized noise can be introduced at the beginning and end of the synthetic utterances, allowing listeners to adapt to the background noise, the ITU-T recommendation \cite{itut835} was followed and eliminating those noises.
