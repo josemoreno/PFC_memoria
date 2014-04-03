@@ -18,11 +18,11 @@ The results will be compared to the ones obtained with the STRAIGHT-based system
 \label{experiments_initial}
 The use of glottal pulses for HMM-synthesis was originally proposed due to the buzzy voice quality caused by simple excitation \cite{raitio2008hmm}.
 %
-However, a proper modelling of the glottal pulse shape improves the quality in the case of lower fundamental frequency speakers, while speakers with higher $F_{0}$, such as women, do not benefit from the pulse and the impulse excitation may be adequate for them.
+However, a proper modelling of the glottal pulse shape improves the quality in the case of lower fundamental frequency speakers. On the other hand, speakers with higher $F_{0}$, such as women, do not benefit from the pulse and the impulse excitation may be adequate for them.
 %
 This particular behavior is the reason of working with a male average voice model, knowing that glottal inverse filtering approach flaws when synthesizing high-pitched voices.
 
-The first step is testing the performance in analysis-resynthesis of GlottHMM when noisy data is used, in order to see if GlottHMM suffer any huge inconvenient caused by the noise present in the samples. This is done using the analysis and synthesis modules of GlottHMM.
+The first step is testing the performance in analysis-resynthesis of GlottHMM when noisy data is used, in order to see if the performance of GlottHMM degrades when background noise is present in the samples. This is done using the analysis and synthesis modules of GlottHMM.
 
 \begin{figure}[!htb]
 \begin{centering}
@@ -42,16 +42,16 @@ Figure \ref{fig:natural_spectra} shows the spectra of a natural speech sample in
 \end{centering}
 \end{figure}
 
-As it can be seen, both the natural and the synthetic spectra has little differences between them.
+As it can be seen, both the natural and the synthetic spectra have little differences between them.
 %
 %
-After listening to the samples we could conclude that noise was not influencing the regular performance GlottHMM.
+After listening to the samples we could conclude that noise was not influencing the regular performance GlottHMM more than it influenced the performance of STRAIGHT in the experiments carried out in \cite{karhila_jstsp_14}.
 
 Another important issue is finding a correct configuration for GlottHMM.
 %
 In Appendix \ref{glott_conf_file}, the configuration file needed by GlottHMM can be found.
 %
-This file has a great amount of options to configure. 
+As it can be seen, this file has a great amount of options to configure. 
 %
 However, thanks to previous experiments conducted and the advice of Tuomo Raitio, who developed GlottHMM, the tweaks to make in the configuration file are focused in noise robustness and some voice characteristics.
 
@@ -66,7 +66,7 @@ Figure \ref{fig:f0_histograms} presents the histograms of the voices used to bui
 \begin{figure}[!htb]
 \begin{centering}
 \includegraphics[width=\textwidth]{images/av_model_=conf_f0_histogram.jpg}
-\caption{$F_{0}$ histogram of the voices composing the average voice model}
+\caption{Histogram of the $F_{0}$ values of individual frames from the voices composing the average voice model, extracted with no lower or upper bounds}
 \label{fig:f0_histograms}
 \end{centering}
 \end{figure}
@@ -147,7 +147,7 @@ A frame by frame representation of the natural waveform, resynthesized waveforms
 \label{fig:frame_by_frame_babble10}
 \end{figure}
 
-\begin{figure}[!htb]
+\begin{figure}[!hb]
 \begin{adjustwidth}{-2.6cm}{}
 \includegraphics[width=1.3\textwidth]{images/babble20_frame_by_frame.jpg}
 \end{adjustwidth}

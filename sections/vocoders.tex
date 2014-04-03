@@ -14,7 +14,7 @@ The airflow is then filter by the vocal tract, formed by the pharynx and the ora
 
 The main functions of the vocoder are translating from natural speech to spectral and excitation parameters and from these features to synthetic speech.
 %
-Thus, the vocoder should try to mimic the process involved in the human speech production.
+Thus, the vocoder should find a way to model the process involved in the human speech production in order to manage these features.
 
 As established in Section \ref{hmm_synthesis_parametrization}, the source-filter theory is a functional trade-off behaving quite well in statistical speech synthesis.
 %
@@ -34,11 +34,11 @@ Among the different types of existing vocoders, in the following sections the tw
 \label{vocoders_glott}
 GlottHMM is a glottal source modelling vocoder.
 %
-The main characteristic of glottal source modelling vocoders is that they use estimated characteristics of the real glottal pulse in the determination of the exciting signal.
+The main characteristic of glottal source modelling vocoders is that they use estimated characteristics of a model of the glottal pulse in the determination of the exciting signal.
 %
 GlottHMM was proposed by Tuomo Raitio in \cite{TuomoMSc} and later improved \cite{raitio_tasl}.
 
-The main idea in GlottHMM vocoder is to estimate the real glottal pulse signal and the real vocal tract filter associated with it.
+The main idea in GlottHMM vocoder is to estimate a physically motivated model of the glottal pulse signal and the vocal tract filter associated with it.
 %
 To achieve that, a method called Iterative Adaptive Inverse Filtering (IAIF) is used \cite{alku1992glottal}.
 %
@@ -123,6 +123,8 @@ In \cite{TuomoMSc} and \cite{manuMSc} the pulse library for GlottHMM is describe
 This method was tested in the inital experiments to find out if it improves the quality over the single pulse excitation technique.
 
 The results obtained with the pulse library method were clearly poorer than the ones using the single glottal pulse, therefore discarding the use of the pulse library.
+%
+The causes of these poorer results when using the pulse library were not further investigated, as the technique presented code problems at the beginning that needed to be debugged.
 
 \subsection{STRAIGHT}
 \label{vocoders_straight}
@@ -134,7 +136,7 @@ The common characteristic in this kind of vocoders is that the parameters are ex
 
 STRAIGHT is the most established of the sophisticated vocoding methods.
 %
-It was proposed by Kawahara \cite{kawahara1997speech} and has gone through extensive research and development, as it can be seen in \cite{kawahara1999restructuring}, for example.
+It was proposed by Hideki Kawahara \cite{kawahara1997speech} and has gone through extensive research and development \cite{kawahara1999restructuring}.
 
 STRAIGHT was originally designed as a tool for speech transformation and accurate spectral envelope representation.
 %
@@ -142,7 +144,8 @@ Its original parameters are represented as Fourier transform magnitudes and thei
 %
 They cannot be used in HMM synthesis because of the high dimensionality. 
 %
-This issue is was overcome with the HMM-modified version of STRAIGHT proposed in \cite{heiga2007details}, representing the spectral envelope as mel-frequency cepstral coefficients and averaging the corresponding aperiodicity measurements over five frequency sub-bands.
+This issue was first overcome with the HMM-modified version of STRAIGHT proposed in \cite{heiga2007details}, representing the spectral envelope as mel-frequency cepstral coefficients and averaging the corresponding aperiodicity measurements over five frequency sub-bands.
+
 
 A detailed description of STRAIGHT can be found in \cite{kawahara1997speech}, \cite{heiga2007details} and \cite{manuMSc}.
 
@@ -179,7 +182,7 @@ The aperiodicity measures are also represented in a compressed form.
 The feature vector obtained with STRAIGHT consists of:
 
 \begin{itemize}
-	\item Excitation parameters: $F_{0}$ and 5 order aperiodicity measure
+	\item Excitation parameters: $F_{0}$ and $n$ order aperiodicity features
 	\item $p$ order STRAIGHT Mel-Frequency Cepstral Coefficient (MFCC)
 \end{itemize}
 
@@ -209,4 +212,4 @@ The band-pass filters used are determined by the aperiodicity coefficients, havi
 
 The pulse train component is all-pass filtered to adjust the phase characteristics of the excitation.
 
-The synthesis quality of STRAIGHT has a mean opinion score (MOS) of 3, while the impulse excitation vocoder (see \ref{vocoders_basics}) obtains a MOS of 2.
+The synthesis quality of STRAIGHT has a mean opinion score (MOS) of 3, while the impulse excitation vocoder (see \ref{vocoders_basics}) obtains a MOS of 2 \cite{karhila_jstsp_14}.
