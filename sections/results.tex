@@ -1,9 +1,17 @@
 \section{Results}
 \label{results}
-In this section we present both the objective and the subjective results obtained. The outliers were taken out of the calculations.
+In this section we present both the objective and the subjective results obtained.
+%
+Each result falling more than 2 standard deviations away from the mean is consider an outlier and taken out from the final calculations.
+%
+In the objective measures the outliers are not shown.
+%
+For the subjective results, the outliers can be found in the MOS score graph (Figure \ref{fig:mos_scores}).
 
 \subsection{Objective Results}
 \label{results_objective}
+The results in this section are the average of the three male speakers.
+
 Table \ref{table:results_no_ext_f0_glott} shows the objective scores obtained for the synthetic speech of the GlottHMM-based system without using the external $F_{0}$ in the feature extraction.
 %
 The clean samples have been synthesized with the clean configuration while in all the noisy cases the noise reduction configuration was used. 
@@ -125,6 +133,8 @@ Factory & 5 & 7.1 & 3.3\\
 \subsection{Subjective Results}
 \label{results_subjective}
 In the listening test two male voices were evaluated for different vocoders adaptation and different GlottHMM configurations by 32 native speakers using a web-based test.
+%
+The reason to use only two of the three speakers is simply to have a test short enough (around 20 minutes long), because a long test might discourage the listeners.
 %
 The results for both speakers were similar enough to be grouped.
 

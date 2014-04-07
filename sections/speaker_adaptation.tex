@@ -2,7 +2,7 @@
 \label{noise_speaker_adaptation}
 Adapting from an average voice model is an efficient way of dealing with limited amount of data.
 %
-Using the noisy data in the adaptation allows us to use a smaller amount of data corrupted than the needed if we use it in building a model starting from scratch.
+Using the noisy data in the adaptation allows us to use a smaller amount of corrupted data than the needed if we use it in building a model starting from scratch.
 %
 Therefore, less feature vectors corrupted by noise are used to estimate the final models.
 
@@ -95,6 +95,8 @@ Valleys and peaks are moved and specially the LSF spectra shows more severe effe
 \end{table}
 
 The effects of babble noise are illustrated in Table \ref{table:an_resyn_results}, where the fwSNRseg and MCD results (see Section \ref{evaluation}) for three test speakers' data analyzed and resynthesized with both GlottHMM and STRAIGHT vocoders are shown.
+%
+The analysis and resynthesis is done by synthesizing speech directly from the features obtained from the analysis of the samples, using only the different modules of the vocoders.
 %
 For reference, the results of the original audio recordings are also shown.
 %

@@ -12,7 +12,7 @@ Nowadays, HMMs are widely used along different fields and its popularity is stil
 
 As the name suggests, HMM-Based systems consist of statistical Markov models, where phenomena are modelled assuming they are Markov processes, i.e. stochastic processes that satisfy the Markov property.
 %
-This Markov property can be described as a memoryless property: the next sample can be predicted from the current one, without using the past samples in the prediction.
+This Markov property can be described as a memoryless property: the next sample can be predicted from the current state of the system and the current sample, without using the past samples in the prediction.
 
 Formally, HMMs are a doubly stochastic process formed by an underlying stochastic process that is not observable, i.e hidden, but can be observed through another set of stochastic processes that produce an observation sequence. 
 %
@@ -26,7 +26,7 @@ At any given discrete time instant, the process is assumed to be at some state.
 %
 The current state generates an observation according to its stochastic process and the underlying Markov chain changes states with time according to the state transition probability matrix. 
 %
-In principle, the order of the underlying Markov chain is not bounded.
+In principle, the number of states, or order, of the underlying Markov chain is not bounded.
 
 In Figure \ref{fig:hmm_structure} a 6-state HMM structure in which at every time instant the state index can increase or stay the same, never decrease. 
 %
@@ -34,7 +34,7 @@ A left-to-right structure is generally used for modelling systems whose properti
 
 An N-state HMM is defined by a state transition probability distribution matrix, an output probability distribution for each state and an initial state probability distribution: $\mathbf{A} = \lbrace a_{ij}\rbrace _{i,j=1}^{N}$, $\mathbf{B} = \lbrace b_{j}(\mathbf{o})\rbrace _{j=1}^{N}$ and $\Pi = \lbrace \pi _{i} \rbrace _{i=1}^{N}$ respectively.
 % 
-$a_{ij}$ represents the state transition probability from state $q_{i}$ to state $q_{j}$ and $\mathbf{o}$ is the observation vector. A more compact notation the model is: $\lambda = (\mathbf{A},\mathbf{B},\Pi)$.
+$a_{ij}$ represents the state transition probability from state $q_{i}$ to state $q_{j}$ and $\mathbf{o}$ is the observation vector. A more compact notation for the model is: $\lambda = (\mathbf{A},\mathbf{B},\Pi)$.
 
 There are three main problems associated to HMMs:
 \begin{enumerate}
@@ -135,7 +135,11 @@ Once the parametrization is done, the speech features obtained are used to train
 %
 During the training, maximum-likelihood estimation of the HMM parameters is performed.
 
-The case of speech synthesis is a particular one, as the $F_{0}$ values are not define in the unvoiced region, the observation sequence of $F_{0}$ is composed of 1-D continuous values and also discrete values or symbols representing the unvoiced.
+The case of speech synthesis is a particular one.
+%
+The $F_{0}$ values are not define in the unvoiced region, making the observation sequence of $F_{0}$ discontinuous.
+%
+This observation sequence is composed of a 1-D continuous values representing the voiced regions and discrete values indicating the frames of the unvoiced regions.
 %
 HMMs need to model both the excitation and spectral parameters at the same time, but applying both the conventional discrete and continuous HMMs to model $F_{0}$ cannot be done directly. 
 %
@@ -149,7 +153,9 @@ To keep synchronization between the spectral and the excitation parameters, they
 
 As shown in Figure \ref{fig:hmm_system_overview}, the training takes into account the duration and context to model the different HMMs.
 %
-The duration modelling specifies for each HMM a state-duration probability distribution that are used to model the temporal structure of the speech in detriment of transition probabilities.
+The duration modelling specifies for each HMM a state-duration probability distribution.
+%
+It models the temporal structure of the speech and it is in charge of the transitions between states, in stead of using fixed transition probabilities.
 
 The context dependency of the HMMs is needed in speech synthesis to deal with the linguistic specifications.
 %

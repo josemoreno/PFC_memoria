@@ -44,6 +44,9 @@ Figure \ref{fig:natural_spectra} shows the spectra of a natural speech sample in
 
 As it can be seen, both the natural and the synthetic spectra have little differences between them.
 %
+For example, the babble and machine gun noises have a bluer background, indicating less energy in low frequencies during the utterance.
+%
+This is usually seen in synthetic speech, where the frequencies generated are bounded.
 %
 After listening to the samples we could conclude that noise was not influencing the regular performance GlottHMM more than it influenced the performance of STRAIGHT in the experiments carried out in \cite{karhila_jstsp_14}.
 
@@ -139,23 +142,39 @@ Not so big as in babble 20dB case increases in MCD can be found also for the cle
 
 A frame by frame representation of the natural waveform, resynthesized waveforms and SNR and MCD measures for the cases of babble 10dB and 20 dB background noise is shown in Figures \ref{fig:frame_by_frame_babble10} and \ref{fig:frame_by_frame_babble20}.
 
-\begin{figure}[!htb]
-\begin{adjustwidth}{-2.6cm}{}
-\includegraphics[width=1.3\textwidth]{images/babble10_frame_by_frame.jpg}
-\end{adjustwidth}
+\begin{figure}[!htbp]
+%\begin{adjustwidth}{-2.6cm}{}
+\includegraphics[width=\textwidth]{images/babble10_frame_by_frame.jpg}
+%\end{adjustwidth}
 \caption{Frame by frame representation of the natural speech with a babble background noise level of 10dB, resynthesized speech after analysis with GlottHMM not using the noise reduction module values in Appendix \ref{glott_conf_noise_red} (set to true), resynthesized speech using the noise reduction module and SNR and MCD measures for the last synthetic sample}
 \label{fig:frame_by_frame_babble10}
 \end{figure}
 
-\begin{figure}[!hb]
-\begin{adjustwidth}{-2.6cm}{}
-\includegraphics[width=1.3\textwidth]{images/babble20_frame_by_frame.pdf}
-\end{adjustwidth}
+\begin{figure}[!htbp]
+%\begin{adjustwidth}{-2.6cm}{}
+\includegraphics[width=\textwidth]{images/babble20_frame_by_frame.pdf}
+%\end{adjustwidth}
 \caption{Frame by frame representation of the natural speech with a babble background noise level of 20dB, resynthesized speech after analysis with GlottHMM not using the noise reduction module values in Appendix \ref{glott_conf_noise_red} (set to true), resynthesized speech using the noise reduction module and SNR and MCD measures for the synthetic samples}
 \label{fig:frame_by_frame_babble20}
 \end{figure}
 
-In the case of the waveforms, we can see no difference when the data is corrupted with a 10dB level babble noise, while when the background noise level is 20dB the noise reduction module used by GlottHMM results in an improvement of the quality attending to cleaner synthetic waveform in speech silences and better objective measures, visible for example when the SNR reaches its maximum value (35 dB). 
+\begin{figure}[!htbp]
+%\begin{adjustwidth}{-2.6cm}{}
+\includegraphics[width=\textwidth]{images/babble10clean_vs_noise.jpg}
+%\end{adjustwidth}
+\caption{SNR and MCD measures of a resynthesized sample with babble 10dB background noise using and not using the noise reduction module (values in Appendix \ref{glott_conf_noise_red}, set to true)}
+\label{fig:babble10_clean_vs_noise}
+\end{figure}
+
+\begin{figure}[!htbp]
+%\begin{adjustwidth}{-2.6cm}{}
+\includegraphics[width=\textwidth]{images/babble20clean_vs_noise.jpg}
+%\end{adjustwidth}
+\caption{SNR and MCD measures of a resynthesized sample with babble 20dB background noise using and not using the noise reduction module (values in Appendix \ref{glott_conf_noise_red}, set to true)}
+\label{fig:babble20_clean_vs_noise}
+\end{figure}
+
+In the case of the waveforms, we can see no difference when the data is corrupted with a 10dB level babble noise, while when the background noise level is 20dB the noise reduction module used by GlottHMM results in an improvement of the quality attending to cleaner synthetic waveform in speech silences and a better SNR score in some silences, visible for example when the SNR reaches its maximum value (35 dB) in the middle of the utterance. 
 
 A comparison between the measures done when resynthesizing using the noise reduction module and without using it is shown in Figures \ref{fig:babble10_clean_vs_noise} and \ref{fig:babble20_clean_vs_noise}. 
 %
@@ -167,7 +186,7 @@ Some frames reach the maximum SNR value (35 dB) while when not using the noise r
 %
 Other examples of this behavior can be found at the graph.
 
-However, the MCD measures in those cases are contradictory. 
+However, the MCD measures are contradictory. 
 %
 While the SNR increases, meaning a quality improvement, the MCD also increases creating the opposite effect, a quality decrease.
 %
@@ -176,22 +195,6 @@ This behavior has been noticed in the silences present along the utterance.
 From all these initial experiments it can be said that the noise reduction included in the GlottHMM vocoder is not capable of carrying out its function when severe noise conditions are found.
 %
 However, when the noise conditions are reasonable to record audio, these first experiments show that GlottHMM gets along quite well in analysis and resynthesys, potentially improving the quality when adapting an HMM-based system. 
-
-\begin{figure}[!htb]
-\begin{adjustwidth}{-2.6cm}{}
-\includegraphics[width=1.3\textwidth]{images/babble10clean_vs_noise.jpg}
-\end{adjustwidth}
-\caption{SNR and MCD measures of a resynthesized sample with babble 10dB background noise using and not using the noise reduction module (values in Appendix \ref{glott_conf_noise_red}, set to true)}
-\label{fig:babble10_clean_vs_noise}
-\end{figure}
-
-\begin{figure}[!hb]
-\begin{adjustwidth}{-2.6cm}{}
-\includegraphics[width=1.3\textwidth]{images/babble20clean_vs_noise.jpg}
-\end{adjustwidth}
-\caption{SNR and MCD measures of a resynthesized sample with babble 20dB background noise using and not using the noise reduction module (values in Appendix \ref{glott_conf_noise_red}, set to true)}
-\label{fig:babble20_clean_vs_noise}
-\end{figure}
 
 \subsection{Feature Extraction}
 \label{experiments_feature_extraction}
@@ -221,7 +224,11 @@ The dynamic features for the Aurora are calculated with a snippet of the scripts
 %
 The addition of all the static and dynamic features gives the 183-dimension of the final feature vector.
 
-It must be pointed out that during the training the Aurora features have no function, but they were investigated in \cite{karhila_jstsp_14} together with STRAIGHT features founding out that they improve the alignment when adaptation was not used, reason why they were tested in this project.
+It must be pointed out that during the training the Aurora features have no function, but they were investigated in \cite{karhila_jstsp_14} together with STRAIGHT features finding out that they improve the alignment when adaptation was not used.
+%
+They were tested during this project in the training of the adaptation transforms, but regardless the results obtained in \cite{karhila_jstsp_14}, our experiments show no improvement over the transforms trained with LSF features.
+%
+Frequently, the alignment obtained with the Aurora features was poorer and noticeable by listening to the synthesized samples.
 %
 Unfortunately, no improvement was obtained over the LSF features in the case of the GlottHMM-based system.
 %
@@ -256,6 +263,10 @@ Three different types of noise were used in this project: Babble, factory and ma
 The noisy samples were obtained adding noise from the NOISEX-92 corpus \cite{Varga1993247} to utterances from the EMIME corpus \cite{wester_accent2010}.
 %
 105 utterances from each of the three target speakers conform the training of the adaptation transforms.
+%
+This setting is similar to the one used in \cite{karhila_jstsp_14}.
+%
+The only difference in the process is the vocoder used, as we want to compare GlottHMM against STRAIGHT.
 
 The adaptation transforms are calculated using a combined algorithm with linear regression and MAP adaptation (see \ref{hmm_synthesis_adaptation}).
 %
@@ -285,10 +296,22 @@ Using both configurations is done to compare due to the results obtained in Sect
 \label{experiments_synthesis}
 The voices of three different male speakers under different noise conditions were synthesized during this work.
 %
-The clean and all the noisy cases were synthesized using the $F_{0}$ extracted from each case.
+The clean and all the noisy cases' features were generated based on the models obtained by adapting with the $F_{0}$ estimations corresponding to each case.
 %
-However, the problems with its estimation are clearly audible when comparing to the synthesis done with an external $F_{0}$ extracted from the clean data of each speaker.
+However, the problems with the estimation are clearly audible when comparing to the synthesis done from models adapted using an external $F_{0}$ extracted from the clean data of each speaker.
 %
-The comparison to the STRAIGHT synthesized speech is done using the external $F_{0}$ synthetic samples obtained with the GlottHMM-based system, focusing on the effects of noise in the spectral components.
+The comparison to the STRAIGHT synthesized speech is done using the models adapted with the external $F_{0}$ synthetic samples obtained with the GlottHMM-based system, focusing on the effects of noise in the spectral components.
+%
+While the subjective evaluation only includes the external $F_{0}$ case, the objective evaluation is conducted for both cases.
 
-Both systems where constructed using the HTK toolkit \cite{young1997htk} and in the case of the GlottHMM-based one, a single, generic pulse was used to produce speech.
+Both systems where constructed using the HTK toolkit \cite{young1997htk}.
+%
+The GlottHMM-based system uses a single, generic pulse was used to produce speech in stead of a pulse library.
+%
+The parameter trajectories for synthesizing are generated with the HMGenS tool from the HTK toolkit according to the models obtained after the adaptation and the labels generated from the input.
+%
+These labels are realigned before the feature generation.
+%
+The realignment is done with the models from the average voice, as problems with the durations of some phonemes where noticed when realigning according to the adapted models.
+%
+Once the features are produced, the synthesis modules of both GlottHMM and STRAIGHT vocoder used them as the input to generate the synthetic speech.

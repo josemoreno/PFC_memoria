@@ -32,6 +32,14 @@ fwS = \frac{10}{M}\sum_{m=1}^{M}\frac{\sum_{j=1}^{K}W(j,m)log_{10}\frac{X(j,m)^{
 
 where $\hat{X}(j,m)$ is the test signal value in the $j$th mel filter channel in time frame $m$, $X(j,m)$ is the reference signal value in the same mel filter channel, and $W(j,m) = X(j,m)^{\gamma}$ with $\gamma = 0.2$ as in \cite{4389058}.
 
+These measures were calculated based on a two-second sample extracted from the middle of each utterances. 
+%
+Unfortunately, synthetic speech may introduce excess frames, worsening the alignment between the synthetic and natural speech used in the measures.
+%
+Therefore, the comparisons between the test and reference samples is done with a variable frame delay ([-10,...,10]). 
+%
+The best result is assumed to be the best aligned and reported.
+
 \subsection{Subjective Evaluation}
 \label{evaluation_subjective}
 In \cite{karhila_remes_icassp13} a test for noisy synthesis cases is proposed based loosely on the ITU-T recommendation for noise-suppression algorithms \cite{itut835}, when background noise added to the synthetic speech can mask some artifacts.
