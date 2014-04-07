@@ -1,5 +1,148 @@
 \begin{resumencastellano}[english]
 En este proyecto se estudian los efectos de distintos tipos de ruido sobre un sistema estad\'istico de s\'intesis de voz adaptativo al locutor.
 
-Los s\'istemas estad\'isticos de s\'intesis de voz se han vuelto bastante populares en los \'ultimos a\~nos gracias a su flexibilidad y bajos requ\'isitos de memoria en comparaci\'on con otros s\'istemas tales como los concatena
+Los sistemas estad\'isticos de s\'intesis de voz se han vuelto bastante populares en los \'ultimos a\~nos gracias a su flexibilidad y bajos requisitos de memoria en comparaci\'on con otros sistemas tales como los concatenativos.
+%
+En particular, los sistemas basados en modelos ocultos de Markov (HMM, por sus siglas en inglés), han ganado popularidad en las \'ultimas d\'ecadas debido a su gran adaptabilidad y bajos requisitos de memoria en comparaci\'on con otras t\'ecnicas de s\'intesis de voz.
+%
+El punto d\'ebil de los sistemas basados en modelos de Markov ha sido la naturalidad de la voz s\'intetica producida.
+%
+Sin embargo, la popularidad obtenida ha despertado un gran inter\'es en investigadores de todo el mundo y se han producido avances significativos que han mejorado la calidad de la s\'intesis obtenida mediante dichos sistemas.
+
+Dentro del amplio mundo de los sistemas de s\'intesis un tipo particular resulta bastante interesante por las posibilidades que proporciona: sistemas texto a voz (TTS, por sus siglas en ingl\'es).
+%
+Estos sistemas permiten sintetizar voz a partir de un texto y los modelos estad\'isticos calculados previamente a partir la informaci\'on de uno o m\'as locutores.
+%
+A partir del texto introducido en el sistema, se generan unas etiquetas que representan dicho texto a nivel de unidades fon\'eticas y las relaciones que \'estas presentan en la frase.
+%
+Las etiquetas son usadas para generar las trayectorias de los distintos par\'ametros que compondr\'ian esa frase en caso de pertenecer al modelo calculado previamente.
+%
+El c\'alculo de los modelos estad\'isticos se realiza mediante el entrenamiento descrito en la Secci\'on \ref{hmm_synthesis_training}.
+%
+Una vez obtenidas las trayectorias, se sintetiza la voz utilizando el m\'odulo correspondiente del vocoder, la herramienta que extrae los par\'ametros de las muestras de audio y genera voz a partir de ellos.
+
+Existe una gran variedad de vocoders que se usan regularmente en s\'intesis estad\'istica.
+%
+El mas popular, m\'as usado y por lo tanto el que mayor desarrollo ha experimentado es STRAIGHT, perteneciente a la categor\'ia de excitaci\'on multibanda mixta.
+%
+STRAIGHT sigue la teor\'ia que divide la voz humana en una fuente y un filtro.
+%
+La fuente est\'a compuesta por los par\'ametros de excitaci\'on mientras que el filtro es modelado mediante los par\'ametros espectrales.
+%
+La excitaci\'on en STRAIGHT es modelada mediante un impulso o un tren de impulsos.
+%
+Esta sencillez en el modelo de excitaci\'on provoca una p\'erdida de calidad y naturalidad en la voz.
+%
+Para solucionar este problema, un vocoder se encuentra actualmente en fase de desarrollo: GlottHMM.
+%
+En el caso de GlottHMM, la excitaci\'on es una estimaci\'on fisiol\'ogica del pulso glotal (el pulso que produce la glotis) y del tracto vocal asociado a \'el.
+%
+De esta estimaci\'on se benefician los locutores con una frecuencia fundamental baja en la voz.
+%
+Cuando la frecuencia fundamental es alta (por ejemplo en el caso de las mujeres y los ni\~nos), la excitaci\'on basada en impulsos simples suele ser adecuada.
+
+En este proyecto se construye un sistema estad\'istico de s\'intesis de voz basado en el vocoder GlottHMM.
+%
+Dicho sistema es adaptativo al locutor, es decir, se genera un modelo de voz promedio a partir de una base de datos que contiene muestras de audio de distintos locutores, para despu\'es adaptar los modelos de Markov generados mediante transformaciones calculadas en base a las muestras de audio del locutor final cuya voz ser\'a sintetizada.
+
+El ruido corrompe la informaci\'on, por lo tanto usar las grabaciones con ruido de fondo para entrenar las transformaciones en la adaptaci\'on del modelo promedio reducir\'a el efecto del ruido, ya que la informaci\'on necesaria para el proceso de adaptaci\'on es bastante menor que la requerida para entrenar el modelo promedio.
+%
+En este proyecto se usan distintos tipos de ruido para comprobar el efecto de cada uno en el sistema construido.
+%
+Los ruidos de fondo presentes en las grabaciones que se usan para adaptar el modelo promedio son: murmullos o voces de fondo, f\'abricas y disparos de armas de fuego, con distintos niveles de se\~nal a ruido.
+%
+Adem\'as se comprobar\'a si un filtrado de ruido previo a la adaptaci\'on tiene influencia positiva en los resultados obtenidos.
+%
+Como el caso m\'as com\'un, adem\'as del m\'as complicado debido a que la se\~nal y el ruido presentan la misma naturaleza, es tener voces como ruido de fondo, se compararan los resultados obtenidos usando GlottHMM con los obtenidos en \cite{karhila_jstsp_14}, donde el sistema construido est\'a basado en STRAIGHT.
+%
+Esta compraci\'on se realiza mediante el c\'alculo de medidas objetivas y la realizaci\'on de un test subjetivo (v\'ease Secci\'on \ref{evaluation}).
+
+Para realizar la comparaci\'on de forma justa es necesario construir el sistema siguiendo una estructura com\'un, exceptuando el uso de distintos vocoders, ya que son los elementos a comparar.
+%
+El sistema construido en este proyecto es un sistema de texto a voz para fin\'es.
+%
+El sistema es dependiente del g\'enero y debido a que en el caso de frecuencias fundamentales altas es sabido que GlottHMM est\'a lejos de la calidad conseguida con STRAIGHT, nos centramos \'unicamente en un modelo masculino.
+%
+El modelo promedio es generado a partir de grabaciones de alta calidad, pertenecientes al corpus PERSO.
+%
+Para la adaptaci\'on se usan las grabaciones de tres locutores pertenecientes al corpus EMIME, a las que se les a\~nade artificialmente ruido del corpus NOISEX-92.
+
+La extracci\'on de par\'ametros se realiza mediante los programas realizados por Antti Suni en el desarrollo de GlottHMM.
+%
+El c\'odigo de Antti Suni extrae los par\'ametros est\'aticos y din\'amicos que necesita GlottHMM y calcula la varianza global (GV, por sus siglas en ingl\'es), la cual proporciona una soluci\'on al problema de generar espectros demasiado suaves.
+%
+Adem\'as de los par\'ametros que son necesarios al usar GlottHMM (v\'ease las secciones \ref{vocoders_glott} y \ref{experiments_feature_extraction}), en este proyecto se ha testado el uso de unos par\'ametros robustos al ruido llamados Aurora, ya que en \cite{karhila_jstsp_14} se comprob\'o que mejoraban el alineamiento de los modelos cuando no se usaba adaptaci\'on.
+%
+Sin embargo, en el caso de GlottHMM se comprob\'o que los par\'ametros Aurora no mejoran los usados por GlottHMM (LSF), presenciando que en muchos de los casos presentaban una peor calidad evidente con s\'olo escuchar las muestras sint\'eticas.
+
+En referencia a la extracci\'on de par\'ametros realizada por GlottHMM, es necesario comentar que requiere de una configuraci\'on un tanto compleja.
+%
+En nuestro caso, los par\'ametros a tener en cuenta son los que configuran el sistema de reducci\'on de ruido.
+%
+La configuraci\'on usada es tal que cuando una muestra de audio tiene una energ\'ia inferior a 4,5dB se reduce la ganancia en 35dB.
+%
+En la Secci\'on \ref{experiments_initial} se observa como act\'ua este sistema en determinados niveles de ruido y las incongruencias en las medidas objetivas cuando la reducci\'on de ruido act\'ua.
+%
+Se ha comprobado que las incongruencias en las medidas se producen sobre todo en los silencios contenidos dentro de la frase, cuando ambas medidas usadas se disparan, indicando una de ellas una mejora en la calidad mientras que la otra indica un empeoramiento.
+
+El modelo de voz promedio es entrenado usando un entrenamiento adpatativo al locutor (SAT, por sus siglas en ingl\'es) mediante el conjunto de scripts (programas no compilables) modificados pertenecientes a EMIME 2010 Blizzard Entry.
+
+Finalmente, para la adaptaci\'on se programa un script que hace uso de las herramientas para reconocimiento y s\'intesis de voz de HTK.
+%
+La adaptaci\'on usada es una combinaci\'on de regresi\'on lineal con una estimaci\'on m\'axima a posteriori (MAP).
+%
+En concreto, se realizan dos rondas de adaptaci\'on CSMAPLR seguidas por una ronda de adaptaci\'on MAP, ya que cuando se tiene la informaci\'on suficiente para entrenar las transformaciones se observa un incremento en la calidad de la voz sint\'etica obtenida.
+%
+En la Secci\'on \ref{hmm_synthesis_adaptation} se puede ver una explicaci\'on general de las distintas adaptaciones usadas.
+
+Durante los experimentos se advirti\'o que al generar las transformaciones en las adaptaciones usando la frecuencia fundamental estimada para cada caso de ruido se obten\'ia una reducci\'on de la calidad considerable.
+%
+Para centrarnos en c\'omo afecta el ruido a los par\'ametros espectrales del vocoder se usa en los entrenamientos de todas las adaptaciones, tanto para voz limpia como para voz con ruido de fondo, una estimaci\'on de la frecuencia fundamental obtenida de las grabaciones de voz sin ruido de fondo a\~nadido pertenecientes al locutor correspondiente.
+
+Los experimentos se realizan adaptando el modelo promedio con informaci\'on ruidosa de distintos tipos a distintos niveles (ruido de voz a 20, 10 y 5dB, ruido de f\'abricas a 10 y 5 dB y ruido de disparos a 0dB) y, en el caso del ruido de voz y del ruido de f\'abricas, usando tambi\'en sus versiones filtradas previamente.
+
+Las etiquetas correspondientes a las frases a sintetizar son realineadas de acuerdo al modelo promedio, ya que el ruido provoca desviaciones en la duraci\'on de los fonemas.
+%
+Mediante este realineamiento se consigue solucionar el problema.
+
+Los resultados obtenidos se pueden observar en la Secci\'on \ref{results}.
+%
+Las medidas objetivas indican que el sistema basado en GlottHMM obtiene mejores resultados en se\~nal a ruido mientras que el sistema basado en STRAIGHT recibe mejor evaluaci\'on en la distorsi\'on mel-cepstral.
+%
+Esto puede ser debido a que STRAIGHT est\'a basado en coeficientes mel-cepstral mientras que GlottHMM enfatiza la s\'intesis formante.
+
+El test subjetivo llevado a cabo se compone de dos partes.
+%
+En la primera se realiza un test comparativo (AB) donde el usuario tiene que elegir qu\'e muestra le parece mejor o m\'as similar a una de referencia.
+%
+Como ambas muestras pueden parecer iguales, se agrega una tercera opci\'on al test: no hay diferencia.
+%
+Esta tercera opci\'on no modifica los resultados estad\'isticos ya que se cuenta como medio voto para cada una de las opciones.
+%
+El test estad\'istico destinado a determinar si los resultados son o no significativos es un test binomial, ya que, como es el caso que nos ata\~ne, hay que elegir entre dos opciones mutuamente excluyentes.
+%
+Para determinar si un resultado es significativo es necesario calcular la probabilidad acumulada de la distribuci\'on para ese resultado.
+%
+Para poder asegurar que un resultado no es significativo, su probabilidad acumulada debe ser igual o inferior a 0,05.
+
+La segunda parte del test es un test de opini\'on media (MOS, por sus siglas en ingl\'es).
+%
+En \'el, el usuario eval\'ua del 1 al 5 la calidad de la muestra atendiendo a la calidad del fondo, la naturalidad de la voz de la muestra y la similitud con una muestra de referencia.
+
+Los resultados subjetivos obtenidos muestran que los usuarios valoran mejor t\'ecnicamente las muestras obtenidas con el sistema basado STRAIGHT pero a la vez muestran una ligera preferencia por el sistema GlottHMM cuando los niveles de ruido son moderados, aunque dicha preferencia se queda cerca de ser significativa ($p = 0,0516$).
+
+
+Al evaluar muestras individualmente los usuarios piensan que STRAIGHT, un sistema que proporciona una voz mas suave, tiene mejor calidad, pero prefieren una voz que var\'ia m\'as, aunque tenga imperfecciones, para el uso diario.
+
+Se ha comprobado que los m\'etodos de evaluaci\'on objetiva llevan a conclusiones contradictorias dependiendo de cu\'al de los dos propuestos en la Secci\'on \ref{evaluation_objective} se use.
+%
+Se deber\'ian desarrollar unos m\'etodos objetivos para la evaluaci\'on de sistemas complejos, ya que se ha demostrado que el sistema condiciona los distintos tipos de medidas.
+%
+Una posible opci\'on ser\'ia tener en cuenta la energ\'ia diferencial de la se\~nal, ya que a\'un en presencia de ruido se deber\'ia apreciar un cambio significativo.
+
+Se puede concluir que GlottHMM sufre una mayor degradaci\'on bajo condiciones de ruido severas, mientras que STRAIGHT es mas robusto.
+%
+En el caso de que el ruido de fondo presente sea moderado, GlottHMM se desenvuelve correctamente.
+
+
 \end{resumencastellano}
