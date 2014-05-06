@@ -1,0 +1,117 @@
+\documentclass[12pt,a4paper]{article}
+\parskip 7.2pt 
+\parindent 10pt
+%\usepackage{array}
+\usepackage{graphicx}
+\usepackage{multirow}
+%\usepackage{listings}
+\usepackage{xcolor,listings}
+\usepackage{amsmath}
+%%% For fancy tables (Jose)
+\usepackage{multirow}
+\usepackage{chngpage}
+\usepackage{booktabs}
+\usepackage{framed}
+\usepackage{longtable}
+\usepackage{url}
+\usepackage{amsfonts,amssymb,amsbsy}
+
+\usepackage[colorlinks=true,urlcolor=red,%
+linkcolor=blue,citecolor=black]{hyperref}
+
+%%% Not breaking badly GlottHMM makes Tuomo happy
+\hyphenation{Glott-HMM}
+
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist
+\title{Effects of Noise on a Speaker-Adaptive Statistical Speech Synthesis System}
+\author{Jose M. Moreno}
+\date{\today}
+\begin{document}
+\begin{titlepage}
+\begin{figure} [htb]
+	\begin{center}
+	\includegraphics[width=1\textwidth]{img/portada1.jpg}
+	\end{center}
+\end{figure}
+\vspace{1.5cm}
+\begin{center}
+	\textbf{{\LARGE Effects of Noise on a\\
+	 Speaker-Adaptive Statistical Speech\\
+	  Synthesis System}}\\
+	\vspace{1cm}
+	{\large Author: Jose M. Moreno}
+\end{center}
+\begin{figure} [htb]
+	\begin{center}
+	\includegraphics[width=0.5\textwidth]{img/portada2.jpg}
+	\end{center}
+\end{figure}
+\vspace{-1cm}
+\begin{center}
+	{Speech Technology Group, ETSI Telecomunicaci\'on\\
+	Universidad Polit\'ecnica de Madrid}
+	\end{center}
+\begin{figure} [htb]
+	\begin{center}
+	\includegraphics[width=0.4\textwidth]{img/portada3.jpg}
+	\end{center}
+\end{figure}
+\vspace{-1cm}
+\begin{center}
+	{Signal Processing and Acoustics Department\\
+	Aalto University School of Electrical Engineering}
+	\end{center}
+\begin{center}
+	{Work partially financed by Simple4All}
+	\end{center}
+\end{titlepage}
+
+\newpage
+\tableofcontents
+
+\newpage
+%% List of figures
+\listoffigures
+
+\newpage
+%% List of tables
+\listoftables
+\newpage
+\include{sections/introduction}
+\include{sections/history_speech_synthesis}
+\include{sections/speech_synthesis_systems}
+\include{sections/hmm_synthesis}
+\include{sections/vocoders}
+\include{sections/speaker_adaptation}
+\include{sections/experiments}
+\include{sections/evaluation}
+\include{sections/results}
+\include{sections/conclusions}
+
+\clearpage
+
+%% The \phantomsection command is nessesary for hyperref to jump to the 
+%% correct page, in other words it puts a hyper marker on the page.
+
+%\phantomsection
+%\addcontentsline{toc}{section}{Viitteet}
+\addcontentsline{toc}{section}{References}
+\bibliographystyle{ieeetr}
+\bibliography{sections/references}
+
+\appendix 
+\clearpage
+%% Adds the word "Appendices" to the table of contents
+\addcontentsline{toc}{section}{Appendices}
+ %% appendix example (starts with section) in Finnish
+\section{GlottHMM Configuration}
+\label{glott_conf}
+%% Equations, tables and figures have their own numbering in Appendices, REMEMBER TO DO EVERY TIME YOU START AN APPENDIX, THE LETTER A IS THE APPENDIX INDEX
+\input{sections/glott_conf}
+
+\newpage
+\section{Questions of the Listening Test}
+\label{test_questions}
+\input{sections/list_quest.tex}
+\end{document}
